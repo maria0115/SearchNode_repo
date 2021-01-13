@@ -30,8 +30,14 @@ async function getlangueges(config, qObj, res,req) {
     // var url = `${config.languages}?category=${qObj.locale}`;
     // console.log(url);
     ret={};
+
+    console.log(ret);
     // // console.log('cookie',req.headers.cookie);
     const languages = require('../language.json');
+    const uselanguages = languages;
+    console.log(languages,"json파일");
+    languages.ko.searchresult = "검색어 <span class='highlight'>&quot;@&quot;</span>에 대한 <span class='highlight'>#</span>건의 검색 결과입니다.";
+    languages.en.searchresult = "Here are <span class='highlight'>#</span> results for the search term <span class='highlight'>&quot;@&quot;</span>.";
     // await axios({
     //     method: 'get',
     //     url: url,
@@ -53,12 +59,12 @@ async function getlangueges(config, qObj, res,req) {
     console.log(qObj.locale,"locale");
     var lang = '';
     if(qObj.locale===""){
-        ret = languages[cookie.parse(qObj.cookie).language];
-        console.log(ret);
+        ret = uselanguages[cookie.parse(qObj.cookie).language];
+        // console.log(ret);
     }else{
         
-        ret = languages[qObj.locale];
-        console.log(ret);
+        ret = uselanguages[qObj.locale];
+        // console.log(ret);
     }
     console.log(qObj,"********************");
     console.log(ret);
