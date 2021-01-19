@@ -4,6 +4,7 @@ const searchquery = require("./search/searchquery.js");
 const searchconvert = require("./search/searchconvert.js");
 async function search(config, qObj, res, req) {
 
+    //Test 변수
     // qObj.class = "approval";
     // qObj.aOrd = "desc";
     // qObj.accOrrec = "created";
@@ -16,11 +17,12 @@ async function search(config, qObj, res, req) {
     // qObj.utc = "-540"
     // qObj.dateType = "season";
 
-    //elasticsearch
+    //elasticsearch Authorization
     const id = config.elastic_id + ":" + config.elastic_pw;
     var authorization = Buffer.from(id, "utf8").toString('base64');
     var url = `${config.elastic_address}/${config.default_index}/`;
-    //msearch
+
+    //msearch or search query 받기
     var stringquery = "";
     var functionName = "";
     if (qObj.class === "all") {
@@ -33,6 +35,8 @@ async function search(config, qObj, res, req) {
         functionName = "SearchConvert";
         url += "_search";
     }
+
+    //elasticsearch 검색
     await axios({
         method: 'post',
         url: url,
@@ -44,6 +48,8 @@ async function search(config, qObj, res, req) {
     })
         .then((response) => {
             var data = response.data;
+            // console.log(data);
+            //data 구조 변환
             eval(`searchconvert.${functionName}(data, res,qObj)`);
         }).catch(error => {
             throw new Error(error);

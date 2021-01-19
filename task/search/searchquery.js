@@ -1,21 +1,28 @@
 const config = require("../../config.json");
+// use new Date
 require('date-utils');
+
+// _search
 async function SearchQuery(qObj) {
     var result = await Query(qObj);
     return result;
 }
 
+// _msearch
 async function MsearchQuery(qObj) {
-
-    console.log("MsearchQuery로옴");
     var index = {};
+    // ex){"index":"search"}
     index.index = config.default_index;
-    // console.log(index);
+
+    // ex) {"query":{"bool":{"filter":[{"match":{"category":"dept"}},{"range":{"created":
+    // {"gte":"now-7d/d","lt":"now","time_zone":"+09:00"}}}],"should":[{"match":{"subject.search":
+    // {"query":"김선호","operator":"AND"}}},{"match":{"body.search":{"query":"김선호",
+    // "operator":"AND"}}},{"match":{"author.search":{"query":"김선호","operator":"AND"}}}]}},
+    // "size":5,"from":0,"sort":{"created":{"order":"desc"}}}
+    var q = await Query(qObj);
+
     var stringquery = '';
     var category = config.default_category;
-    var q = await Query(qObj);
-    // console.log(JSON.stringify(q), "q");
-    // console.log(category[2], "length");
     for (var i = 0; i < category.length; i++) {
         var query = {};
 
@@ -33,7 +40,7 @@ async function MsearchQuery(qObj) {
         // console.log(stringquery, 'stringquery');
     }
 
-    console.log(stringquery);
+    // console.log(stringquery);
     return stringquery;
 }
 
@@ -83,29 +90,31 @@ async function Query(qObj) {
         smallm.match = smallq;
         filter.push(smallm);
         // console.log(q.query.bool)
-        const utc = UtcDate(qObj.utc);
-        var lt = '';
-        var gte = "";
-        var format = "";
-        var createdate = {};
-        if (qObj.dateType === "season" || qObj.dateType === "ago") {
-            gte = qObj.gte;
-            lt = "now";
-        } else if (qObj.dateType === "custom") {
-            gte = qObj.gte[0];
-            lt = qObj.gte[1];
-            format = "yyyyMMdd";
-            createdate.format = format;
+        if (qObj.gte !== "default") {
+            const utc = UtcDate(qObj.utc);
+            var lt = '';
+            var gte = "";
+            var format = "";
+            var createdate = {};
+            if (qObj.dateType === "season" || qObj.dateType === "ago") {
+                gte = qObj.gte;
+                lt = "now";
+            } else if (qObj.dateType === "custom") {
+                gte = qObj.gte[0];
+                lt = qObj.gte[1];
+                format = "yyyyMMdd";
+                createdate.format = format;
+            }
+
+            createdate.lt = lt;
+            createdate.gte = gte;
+            createdate['time_zone'] = utc;
+            var range = {};
+            range.created = createdate;
+            var rangefilter = {};
+            rangefilter.range = range;
+            filter.push(rangefilter);
         }
-        
-        createdate.lt = lt;
-        createdate.gte = gte;
-        createdate['time_zone'] = utc;
-        var range = {};
-        range.created = createdate;
-        var rangefilter = {};
-        rangefilter.range = range;
-        filter.push(rangefilter);
 
         bool.filter = filter;
         bool.should = should;
