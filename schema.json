@@ -95,6 +95,19 @@
 	"mappings": {
 	"data":{
 		"properties": {
+			"body": {
+				"type": "keyword",
+				"fields": {
+					"contains": {
+						"type": "text"
+					},
+					"search": {
+						"type": "text",
+						"search_analyzer": "my_customer_ngram_analyzer",
+						"analyzer": "my_customer_ngram_analyzer"
+					}
+				}
+			},
 			"filename": {
 				"type": "keyword",
 				"fields": {
@@ -174,7 +187,8 @@
 				}
 			},
 			"created": {
-				"type": "keyword",
+				"type": "date",
+				"format": "yyyyMMdd'T'HHmmssZ",
 				"fields": {
 					"contains": {
 						"type": "text"
