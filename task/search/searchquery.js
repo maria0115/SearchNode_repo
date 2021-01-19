@@ -4,18 +4,20 @@ require('date-utils');
 
 // _search
 async function SearchQuery(qObj) {
+    console.log('왜여기로오지');
     var result = await Query(qObj);
     return result;
 }
 
 // _msearch
 async function MsearchQuery(qObj) {
+    console.log("MsearchQuery 여기로 왔다")
     var index = {};
     // ex){"index":"search"}
     index.index = config.default_index;
 
     // ex) {"query":{"bool":{"filter":[{"match":{"category":"dept"}},{"range":{"created":
-    // {"gte":"now-7d/d","lt":"now","time_zone":"+09:00"}}}],"should":[{"match":{"subject.search":
+    // {"gte":"now-7d/d","lt":"now","time_zone":"+09:00"}}}],"must":[{"match":{"subject.search":
     // {"query":"김선호","operator":"AND"}}},{"match":{"body.search":{"query":"김선호",
     // "operator":"AND"}}},{"match":{"author.search":{"query":"김선호","operator":"AND"}}}]}},
     // "size":5,"from":0,"sort":{"created":{"order":"desc"}}}
@@ -40,7 +42,7 @@ async function MsearchQuery(qObj) {
         // console.log(stringquery, 'stringquery');
     }
 
-    // console.log(stringquery);
+    console.log(stringquery, "stringquery");
     return stringquery;
 }
 
@@ -59,29 +61,22 @@ async function Query(qObj) {
         var smallquery = {};
         smallquery.query = qObj.searchword;
         smallquery.operator = "AND";
-
+        
         var bool = {};
-        var should = [];
+        var must = [];
+        var fields = [];
         if (qObj.fieldname !== 'all') {
-            var match = {};
-            var smallmatch = {};
-            smallmatch[`${qObj.fieldname}.search`] = smallquery;
-            match.match = smallmatch;
-            should.push(match);
+            fields.push(`${qObj.fieldname}.search`);
         } else {
             for (var i = 0; i < config.default_field.length; i++) {
-                var match = {};
-                var smallmatch = {};
-                console.log(config.default_field[i]);
                 const field = config.default_field[i];
-                smallmatch[`${field}.search`] = smallquery;
-                match.match = smallmatch;
-                // console.log(match);
-                should.push(match);
-                // console.log(should);
+                fields.push(`${field}.search`);
             }
-            // console.log(should);
         }
+        smallquery.fields = fields;
+        var multimatch = {};
+        multimatch['multi_match'] = smallquery;
+        must.push(multimatch);
         var filter = [];
         var smallq = {};
         var categ = qObj.class;
@@ -117,7 +112,7 @@ async function Query(qObj) {
         }
 
         bool.filter = filter;
-        bool.should = should;
+        bool.must = must;
         query.bool = bool;
         esquery.query = query;
     } else {
@@ -133,7 +128,7 @@ async function Query(qObj) {
     var sort = {};
     sort[qObj.accOrrec] = sortfield;
     esquery.sort = sort;
-    console.log(JSON.stringify(esquery), "esquery");
+    // console.log(JSON.stringify(esquery), "esquery");
     return esquery;
 }
 

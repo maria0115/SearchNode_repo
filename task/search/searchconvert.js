@@ -3,7 +3,7 @@ function SearchConvert(data, res, qObj) {
     // console.log('searchconvert', data);
     var d = [];
     var resultdata = data.hits;
-    console.log(resultdata);
+    console.log(resultdata,"searchconvert hi");
     if (resultdata.total > 0) {
         for (var i = 0; i < resultdata.hits.length; i++) {
             var resdata = resultdata.hits[i]['_source']
