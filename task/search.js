@@ -5,17 +5,6 @@ const axios = require("axios");
 require('date-utils');
 
 async function search(config, qObj, res, req) {
-    qObj.class = "all";
-    qObj.aOrd = "desc";
-    qObj.accOrrec = "created";
-    qObj.fieldname = "all";
-    qObj.gte = "now-7d/d";
-    qObj.pagenum = 0;
-    qObj.searchword = "김선호";
-    qObj.searchwordarr = [];
-    qObj.size = 5;
-    qObj.utc = "-540"
-    qObj.dateType = "season";
        //elasticsearch
        const id = config.elastic_id + ":" + config.elastic_pw;
        var authorization = Buffer.from(id, "utf8").toString('base64');
