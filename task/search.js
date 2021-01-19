@@ -4,17 +4,17 @@ const searchquery = require("./search/searchquery.js");
 const searchconvert = require("./search/searchconvert.js");
 async function search(config, qObj, res, req) {
 
-    qObj.class = "approval";
-    qObj.aOrd = "desc";
-    qObj.accOrrec = "created";
-    qObj.fieldname = "subject";
-    qObj.gte = "now-7d/d";
-    qObj.pagenum = 0;
-    qObj.searchword = "김선호";
-    qObj.searchwordarr = [];
-    qObj.size = 5;
-    qObj.utc = "-540"
-    qObj.dateType = "season";
+    // qObj.class = "approval";
+    // qObj.aOrd = "desc";
+    // qObj.accOrrec = "created";
+    // qObj.fieldname = "subject";
+    // qObj.gte = "now-7d/d";
+    // qObj.pagenum = 0;
+    // qObj.searchword = "김선호";
+    // qObj.searchwordarr = [];
+    // qObj.size = 5;
+    // qObj.utc = "-540"
+    // qObj.dateType = "season";
 
     //elasticsearch
     const id = config.elastic_id + ":" + config.elastic_pw;
