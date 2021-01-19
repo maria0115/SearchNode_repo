@@ -1,24 +1,42 @@
 {
-    "ko":{
-        "allsearch":"전체검색",
-        "approval":"전자결재",
-        "atthe":"모든결과",
-        "attheauthor":"작성자에서",
-        "atthecontent":"내용에서",
-        "atthetitle":"제목에서",
-        "optionvalue":"한국어",
-        "searchresult":"검색어 <span class='highlight'>&quot;@&quot;</span>에 대한 <span class='highlight'>#</span>건의 검색 결과입니다.",
-        "sortdate":"최신일자순"
+    "ko": {
+        "allsearch": "전체검색",
+        "approval": "전자결재",
+        "board": "게시판",
+        "person": "임직원",
+        "atthe": "모든결과",
+        "attheauthor": "작성자에서",
+        "atthecontent": "내용에서",
+        "atthetitle": "제목에서",
+        "optionvalue": "한국어",
+        "searchresult": "검색어 <span class='highlight'>&quot;@&quot;</span>에 대한 <span class='highlight'>#</span>건의 검색 결과입니다.",
+        "sortdate": "최신일자순",
+        "alldates": "모든 날짜",
+        "anhourago": "지난 1시간",
+        "adayago": "지난 1일",
+        "aweekago": "지난 1주",
+        "amonthago": "지난 1개월",
+        "ayearago": "지난 1년",
+        "periodsetting": "기간 설정"
     },
-    "en":{
-        "allsearch":"AllSearch",
-        "approval":"Approval",
-        "atthe":"All Result",
-        "attheauthor":"At The Author",
-        "atthecontent":"At The Content",
-        "atthetitle":"At The Title",
-        "optionvalue":"English",
-        "searchresult":"Here are <span class='highlight'>#</span> results for the search term <span class='highlight'>&quot;@&quot;</span>.",
-        "sortdate":"RecentDate"
+    "en": {
+        "allsearch": "AllSearch",
+        "approval": "Approval",
+        "board": "Board",
+        "person": "Person",
+        "atthe": "All Result",
+        "attheauthor": "At The Author",
+        "atthecontent": "At The Content",
+        "atthetitle": "At The Title",
+        "optionvalue": "English",
+        "searchresult": "Here are <span class='highlight'>#</span> results for the search term <span class='highlight'>&quot;@&quot;</span>.",
+        "sortdate": "RecentDate",
+        "alldates": "All Dates",
+        "anhourago": "An Hour Ago",
+        "adayago": "A Day Ago",
+        "aweekago": "A Week Ago",
+        "amonthago": "A Month Ago",
+        "ayearago": "A Year Ago",
+        "periodsetting": "Period Setting"
     }
 }
