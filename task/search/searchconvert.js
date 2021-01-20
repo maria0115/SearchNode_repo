@@ -10,10 +10,7 @@ function SearchConvert(data, res, qObj) {
             if(resultdata.hits[i]['_source'].category=='person'){
                 var body = resultdata.hits[i]['_source'].body;
                 var rebody = body.replace(/'/gi,'"');
-                console.log('body:',body);
-                console.log('rebody:',rebody);
                 var jsonBody = JSON.parse(rebody);
-                console.log('jsonBody.jobTitle:',jsonBody.jobTitle);
                 resultdata.hits[i]['_source'].jobTitle = jsonBody.jobTitle;
                 resultdata.hits[i]['_source'].jobPosition = jsonBody.jobPosition;
                 resultdata.hits[i]['_source'].company = jsonBody.company;
