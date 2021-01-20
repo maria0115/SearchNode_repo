@@ -6,13 +6,13 @@ async function search(config, qObj, res, req) {
 
     //Test 변수
     // qObj.class = "all";
-    // qObj.aOrd = "desc";
+    // qObj.aOrd = "accuracy";
     // qObj.accOrrec = "created";
     // qObj.fieldname = "all";
-    // qObj.gte = "now-7d/d";
+    // qObj.gte = "now-7M/d";
     // qObj.pagenum = 0;
-    // qObj.searchword = "안녕";
-    // qObj.searchwordarr = [];
+    // qObj.searchword = "1박 강예은";
+    // qObj.searchwordarr = ["2일","김선호"];
     // qObj.size = 5;
     // qObj.utc = "-540"
     // qObj.dateType = "season";

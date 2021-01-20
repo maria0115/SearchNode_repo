@@ -51,32 +51,19 @@ async function Query(qObj) {
     var esquery = {};
     console.log(qObj);
     if (qObj.searchwordarr.length > 0) {
-        for (var i = 0; i < qObj.searchwordarr.length; i++) {
-            qObj.searchword += ` ${qObj.searchwordarr[i]}`;
-        }
+        // qObj.searchword = "";
+        // for (var i = 0; i < qObj.searchwordarr.length; i++) {
+        //     qObj.searchword += ` ${qObj.searchwordarr[i]}`;
+        // }
     }
+    // qObj.searchwordarr.push(qObj.searchword);
+    console.log(qObj.searchwordarr);
     console.log(qObj.searchword);
+    var searcharr = qObj.searchword.split(" ");
+    console.log(searcharr);
     var query = {};
     if (qObj.searchword !== '') {
-        var smallquery = {};
-        smallquery.query = qObj.searchword;
-        smallquery.operator = "AND";
-        
         var bool = {};
-        var must = [];
-        var fields = [];
-        if (qObj.fieldname !== 'all') {
-            fields.push(`${qObj.fieldname}.search`);
-        } else {
-            for (var i = 0; i < config.default_field.length; i++) {
-                const field = config.default_field[i];
-                fields.push(`${field}.search`);
-            }
-        }
-        smallquery.fields = fields;
-        var multimatch = {};
-        multimatch['multi_match'] = smallquery;
-        must.push(multimatch);
         var filter = [];
         var smallq = {};
         var categ = qObj.class;
@@ -100,7 +87,15 @@ async function Query(qObj) {
                 format = "yyyyMMdd";
                 createdate.format = format;
             }
-
+            // if (qObj.dateType === "season" || qObj.dateType === "ago") {
+                //     gte = qObj.gte;
+            //     lt = qObj.lt;
+            // } else if (qObj.dateType === "custom") {
+                //     gte = qObj.gte[0];
+                //     lt = qObj.gte[1];
+                // }
+                // format = "yyyyMMdd";
+                // createdate.format = format;
             createdate.lt = lt;
             createdate.gte = gte;
             createdate['time_zone'] = utc;
@@ -110,8 +105,41 @@ async function Query(qObj) {
             rangefilter.range = range;
             filter.push(rangefilter);
         }
-
+        
         bool.filter = filter;
+
+        var should = [];
+        var must = [];
+        var fields = [];
+        if (qObj.fieldname !== 'all') {
+            fields.push(`${qObj.fieldname}.search`);
+        } else {
+            for (var i = 0; i < config.default_field.length; i++) {
+                const field = config.default_field[i];
+                fields.push(`${field}.search`);
+            }
+        }
+        for(var i =0 ;i<searcharr.length;i++){
+            var shouldquery = {};
+            shouldquery.operator = "AND";
+            shouldquery.fields = fields;
+            shouldquery.type ="best_fields";
+            shouldquery.query = searcharr[i];
+            var shouldmultimatch = {};
+            shouldmultimatch['multi_match'] = shouldquery;
+            should.push(shouldmultimatch);
+        }
+        bool.should = should;
+        for(var i =0 ;i<qObj.searchwordarr.length;i++){
+            var mustquery = {};
+            mustquery.operator = "AND";
+            mustquery.fields = fields;
+            mustquery.type ="phrase";
+            mustquery.query = qObj.searchwordarr[i];
+            var mustmultimatch = {};
+            mustmultimatch['multi_match'] = mustquery;
+            must.push(mustmultimatch);
+        }
         bool.must = must;
         query.bool = bool;
         esquery.query = query;
@@ -123,11 +151,13 @@ async function Query(qObj) {
     }
     esquery.size = qObj.size;
     esquery.from = qObj.pagenum;
-    var sortfield = {};
-    sortfield.order = qObj.aOrd;
-    var sort = {};
-    sort[qObj.accOrrec] = sortfield;
-    esquery.sort = sort;
+    if(qObj.aOrd==="desc"){
+        var sortfield = {};
+        sortfield.order = qObj.aOrd;
+        var sort = {};
+        sort[qObj.accOrrec] = sortfield;
+        esquery.sort = sort;
+    }
     // console.log(JSON.stringify(esquery), "esquery");
     return esquery;
 }
