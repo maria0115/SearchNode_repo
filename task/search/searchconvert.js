@@ -6,7 +6,7 @@ function SearchConvert(data, res, qObj) {
     console.log(resultdata,"searchconvert hi");
     if (resultdata.total > 0) {
         for (var i = 0; i < resultdata.hits.length; i++) {
-
+            
             if(resultdata.hits[i]['_source'].category=='person'){
                 var body = resultdata.hits[i]['_source'].body;
                 var rebody = body.replace(/'/gi,'"');
@@ -47,6 +47,20 @@ function MsearchConvert(data, res, qObj) {
         if (resdata.hits.length > 0) {
             for (var j = 0; j < resdata.hits.length; j++) {
                 var resd = resdata.hits[j]['_source']
+
+                if(resdata.hits[j]['_source'].category=='person'){
+                    var body = resdata.hits[i]['_source'].body;
+                    var rebody = body.replace(/'/gi,'"');
+                    var jsonBody = JSON.parse(rebody);
+                    resdata.hits[j]['_source'].jobTitle = jsonBody.jobTitle;
+                    resdata.hits[j]['_source'].jobPosition = jsonBody.jobPosition;
+                    resdata.hits[j]['_source'].company = jsonBody.company;
+                    resdata.hits[j]['_source'].phone = jsonBody.phone;
+                    resdata.hits[j]['_source'].tel = jsonBody.tel;
+                    resdata.hits[j]['_source'].email = jsonBody.email;
+                    resdata.hits[j]['_source'].job = jsonBody.job;
+                }
+
                 d.push(resd);
             }
             var category = resdata.hits[0]['_source'].category;
