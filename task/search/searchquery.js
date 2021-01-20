@@ -49,18 +49,18 @@ async function MsearchQuery(qObj) {
 async function Query(qObj) {
     console.log(qObj);
     var esquery = {};
-    console.log(qObj);
-    if (qObj.searchwordarr.length > 0) {
-        // qObj.searchword = "";
-        // for (var i = 0; i < qObj.searchwordarr.length; i++) {
-        //     qObj.searchword += ` ${qObj.searchwordarr[i]}`;
-        // }
-    }
+    // console.log(qObj);
+    // if (qObj.searchwordarr.length > 0) {
+    //     // qObj.searchword = "";
+    //     // for (var i = 0; i < qObj.searchwordarr.length; i++) {
+    //     //     qObj.searchword += ` ${qObj.searchwordarr[i]}`;
+    //     // }
+    // }
     // qObj.searchwordarr.push(qObj.searchword);
     console.log(qObj.searchwordarr);
     console.log(qObj.searchword);
-    var searcharr = qObj.searchword.split(" ");
-    console.log(searcharr);
+    // var searcharr = qObj.searchword.split(" ");
+    // console.log(searcharr);
     var query = {};
     if (qObj.searchword !== '') {
         var bool = {};
@@ -88,14 +88,14 @@ async function Query(qObj) {
                 createdate.format = format;
             }
             // if (qObj.dateType === "season" || qObj.dateType === "ago") {
-                //     gte = qObj.gte;
+            //     gte = qObj.gte;
             //     lt = qObj.lt;
             // } else if (qObj.dateType === "custom") {
-                //     gte = qObj.gte[0];
-                //     lt = qObj.gte[1];
-                // }
-                // format = "yyyyMMdd";
-                // createdate.format = format;
+            //     gte = qObj.gte[0];
+            //     lt = qObj.gte[1];
+            // }
+            // format = "yyyyMMdd";
+            // createdate.format = format;
             createdate.lt = lt;
             createdate.gte = gte;
             createdate['time_zone'] = utc;
@@ -105,10 +105,9 @@ async function Query(qObj) {
             rangefilter.range = range;
             filter.push(rangefilter);
         }
-        
+
         bool.filter = filter;
 
-        var should = [];
         var must = [];
         var fields = [];
         if (qObj.fieldname !== 'all') {
@@ -119,26 +118,42 @@ async function Query(qObj) {
                 fields.push(`${field}.search`);
             }
         }
-        for(var i =0 ;i<searcharr.length;i++){
-            var shouldquery = {};
-            shouldquery.operator = "AND";
-            shouldquery.fields = fields;
-            shouldquery.type ="best_fields";
-            shouldquery.query = searcharr[i];
-            var shouldmultimatch = {};
-            shouldmultimatch['multi_match'] = shouldquery;
-            should.push(shouldmultimatch);
-        }
-        bool.should = should;
-        for(var i =0 ;i<qObj.searchwordarr.length;i++){
-            var mustquery = {};
+
+        for (var i = 0; i < qObj.searchwordarr.length; i++) {
+            
+
+            
+
+            if (qObj.searchwordarr[i].indexOf(" ") !== -1) {
+                var searcharr = qObj.searchwordarr[i].split(" ");
+                var should = [];
+                for (var j = 0; j < searcharr.length; j++) {
+                    var mustquery = {};
             mustquery.operator = "AND";
             mustquery.fields = fields;
-            mustquery.type ="phrase";
-            mustquery.query = qObj.searchwordarr[i];
-            var mustmultimatch = {};
-            mustmultimatch['multi_match'] = mustquery;
-            must.push(mustmultimatch);
+            mustquery.type = "best_fields";
+                    mustquery.query = searcharr[j];
+                    var mustmultimatch = {};
+                    mustmultimatch['multi_match'] = mustquery;
+                    console.log(mustmultimatch,"mustmultimatch");
+                    should.push(mustmultimatch);
+                    console.log(should,"should");
+                    var shouldinmust = {};
+                    shouldinmust.should = should;
+                    var mustbool = {};
+                    mustbool.bool = shouldinmust;
+                }
+                must.push(mustbool);
+            } else {
+                var mustquery = {};
+            mustquery.operator = "AND";
+            mustquery.fields = fields;
+            mustquery.type = "best_fields";
+                mustquery.query = qObj.searchwordarr[i];
+                var mustmultimatch = {};
+                mustmultimatch['multi_match'] = mustquery;
+                must.push(mustmultimatch);
+            }
         }
         bool.must = must;
         query.bool = bool;
@@ -151,7 +166,7 @@ async function Query(qObj) {
     }
     esquery.size = qObj.size;
     esquery.from = qObj.pagenum;
-    if(qObj.aOrd==="desc"){
+    if (qObj.aOrd === "desc") {
         var sortfield = {};
         sortfield.order = qObj.aOrd;
         var sort = {};
