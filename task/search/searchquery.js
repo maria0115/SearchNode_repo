@@ -88,14 +88,14 @@ async function Query(qObj) {
                 createdate.format = format;
             }
             // if (qObj.dateType === "season" || qObj.dateType === "ago") {
-                //     gte = qObj.gte;
+            //     gte = qObj.gte;
             //     lt = qObj.lt;
             // } else if (qObj.dateType === "custom") {
-                //     gte = qObj.gte[0];
-                //     lt = qObj.gte[1];
-                // }
-                // format = "yyyyMMdd";
-                // createdate.format = format;
+            //     gte = qObj.gte[0];
+            //     lt = qObj.gte[1];
+            // }
+            // format = "yyyyMMdd";
+            // createdate.format = format;
             createdate.lt = lt;
             createdate.gte = gte;
             createdate['time_zone'] = utc;
@@ -105,7 +105,7 @@ async function Query(qObj) {
             rangefilter.range = range;
             filter.push(rangefilter);
         }
-        
+
         bool.filter = filter;
 
         var should = [];
@@ -119,28 +119,32 @@ async function Query(qObj) {
                 fields.push(`${field}.search`);
             }
         }
-        for(var i =0 ;i<searcharr.length;i++){
-            var shouldquery = {};
-            shouldquery.operator = "AND";
-            shouldquery.fields = fields;
-            shouldquery.type ="best_fields";
-            shouldquery.query = searcharr[i];
-            var shouldmultimatch = {};
-            shouldmultimatch['multi_match'] = shouldquery;
-            should.push(shouldmultimatch);
+        if (searcharr.length > 0) {
+            for (var i = 0; i < searcharr.length; i++) {
+                var shouldquery = {};
+                shouldquery.operator = "AND";
+                shouldquery.fields = fields;
+                shouldquery.type = "best_fields";
+                shouldquery.query = searcharr[i];
+                var shouldmultimatch = {};
+                shouldmultimatch['multi_match'] = shouldquery;
+                should.push(shouldmultimatch);
+            }
+            bool.should = should;
         }
-        bool.should = should;
-        for(var i =0 ;i<qObj.searchwordarr.length;i++){
-            var mustquery = {};
-            mustquery.operator = "AND";
-            mustquery.fields = fields;
-            mustquery.type ="phrase";
-            mustquery.query = qObj.searchwordarr[i];
-            var mustmultimatch = {};
-            mustmultimatch['multi_match'] = mustquery;
-            must.push(mustmultimatch);
+        if (qObj.searchwordarr.length > 0) {
+            for (var i = 0; i < qObj.searchwordarr.length; i++) {
+                var mustquery = {};
+                mustquery.operator = "AND";
+                mustquery.fields = fields;
+                mustquery.type = "phrase";
+                mustquery.query = qObj.searchwordarr[i];
+                var mustmultimatch = {};
+                mustmultimatch['multi_match'] = mustquery;
+                must.push(mustmultimatch);
+            }
+            bool.must = must;
         }
-        bool.must = must;
         query.bool = bool;
         esquery.query = query;
     } else {
@@ -151,7 +155,7 @@ async function Query(qObj) {
     }
     esquery.size = qObj.size;
     esquery.from = qObj.pagenum;
-    if(qObj.aOrd==="desc"){
+    if (qObj.aOrd === "desc") {
         var sortfield = {};
         sortfield.order = qObj.aOrd;
         var sort = {};
