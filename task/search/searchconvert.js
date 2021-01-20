@@ -6,6 +6,20 @@ function SearchConvert(data, res, qObj) {
     console.log(resultdata,"searchconvert hi");
     if (resultdata.total > 0) {
         for (var i = 0; i < resultdata.hits.length; i++) {
+
+            if(resultdata.hits[i]['_source'].category=='person'){
+                var body = resultdata.hits[i]['_source'].body;
+                var rebody = body.replace(/'/gi,'"');
+                var jsonBody = JSON.parse(rebody);
+                resultdata.hits[i]['_source'].jobTitle = jsonBody.jobTitle;
+                resultdata.hits[i]['_source'].jobPosition = jsonBody.jobPosition;
+                resultdata.hits[i]['_source'].company = jsonBody.company;
+                resultdata.hits[i]['_source'].phone = jsonBody.phone;
+                resultdata.hits[i]['_source'].tel = jsonBody.tel;
+                resultdata.hits[i]['_source'].email = jsonBody.email;
+                resultdata.hits[i]['_source'].job = jsonBody.job;
+            }
+
             var resdata = resultdata.hits[i]['_source']
             d.push(resdata);
         }
@@ -42,7 +56,6 @@ function MsearchConvert(data, res, qObj) {
             categorydata.data = d;
             // console.log(categorydata);
             dataquery[category] = categorydata;
-
         }
         // result.data = dataquery;
     }
