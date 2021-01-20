@@ -4,6 +4,7 @@ const logger = require("../lib/log.js");
 const axios = require("axios");
 const cookie = require('cookie');
 const fs = require('fs')
+const path = require('path');
 
 function convert(config, qObj, res, es_res) {
     // console.log(es_res.data,"결과값");
@@ -33,9 +34,9 @@ async function getlangueges(config, qObj, res,req) {
     ret={};
 
     console.log(ret);
-    // // console.log('cookie',req.headers.cookie);
-    console.log(__dirname);
-    var contents = fs.readFileSync('d:/nodejs/searchdata/language.json', 'utf8');
+    var dirpath = path.join(__dirname, '..', 'language.json');
+    console.log(dirpath);
+    var contents = fs.readFileSync(dirpath, 'utf8');
     fs.closeSync(2);
     console.log(contents);
     var uselanguages =JSON.parse(contents);
