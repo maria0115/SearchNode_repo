@@ -13,6 +13,10 @@ var pathList = [
   "/create",
   "/getlangueges",
   "/schema",
+  // "/all",
+  // "/person",
+  // "/approval",
+  // "/board"
 ];
 var app = express();
 
@@ -22,36 +26,6 @@ if (config.port) {
   console.log("환경 파일--config.json 에 port 키가 없습니다.");
 }
 
-app.get(pathList, (req, res) => {
-  console.log(util.getTimeStamp() + " " + "GET..." + req.url);
-  var reqUrl = url.parse(req.url, true);
-  var qObj = reqUrl.query; // 일반적인 사용
-
-  console.log(reqUrl);
-
-  var functionName = "";
-  for (var index = 0; index < pathList.length; index++) {
-    if (
-      req.url
-        .toLocaleLowerCase()
-        .indexOf(pathList[index].toLocaleLowerCase()) == 0
-    ) {
-      var nIndex;
-      var str = pathList[index];
-      nIndex = str.indexOf("/");
-      console.log("nIndex", nIndex);
-      if (nIndex != -1) {
-        functionName = str.substr(nIndex + 1, str.length);
-        // eval(functionName)
-        console.log(functionName + "hihi");
-        qObj.cookie = req.headers.cookie;
-        eval(functionName + '(config, qObj, res,req)');
-      }
-      break;
-    }
-  }
-  
-});
 app.post(pathList, (req, res) => {
   var body = [];
   var qObj = {};
@@ -92,6 +66,52 @@ app.post(pathList, (req, res) => {
             // eval(functionName)
             console.log(functionName + "hihi");
             qObj.cookie = req.headers.cookie;
+
+            var moment = require('moment');//현재시간
+            var utcTime = moment.utc().format("YYYYMMDDHHmmss");//UTC시간
+            var _1Hago = moment().utc().subtract(1, 'h').format("YYYYMMDDHHmmss");//1시간전
+            var _1Dago = moment().utc().subtract(1, 'd').format("YYYYMMDDHHmmss");//1일전
+            var _1Wago = moment().utc().subtract(1, 'w').format("YYYYMMDDHHmmss");//1주전
+            var _1Mago = moment().utc().subtract(1, 'M').format("YYYYMMDDHHmmss");//1달전
+            var _1Yago = moment().utc().subtract(1, 'y').format("YYYYMMDDHHmmss");//1년전
+            console.log('현재시간:',moment().format("YYYYMMDDHHmmss"));
+            console.log('utc시간:',utcTime);
+            console.log('1시간전:',_1Hago);
+            console.log('1일전:',_1Dago);
+            console.log('1주전:',_1Wago);
+            console.log('1달전:',_1Mago);
+            console.log('1년전:',_1Yago);
+            console.log('qObj.gte:',qObj.gte);
+            console.log('qObj.lt:',qObj.lt);
+
+            if(qObj.gte == 'now-1h/s'){
+              qObj.gte = _1Hago;
+              qObj.lt = utcTime;
+            }
+            else if(qObj.gte == 'now-1d/d'){
+              qObj.gte = _1Dago;
+              qObj.lt = utcTime;
+            }
+            else if(qObj.gte == 'now-7d/d'){
+              qObj.gte = _1Wago;
+              qObj.lt = utcTime;
+            }
+            else if(qObj.gte == 'now-1M/d'){
+              qObj.gte = _1Mago;
+              qObj.lt = utcTime;
+            }
+            else if(qObj.gte == 'now-1y/d'){
+              qObj.gte = _1Yago;
+              qObj.lt = utcTime;
+            }
+            else if(qObj.dateType == 'custom'){
+              var startDate = qObj.gte;
+              var endDate = qObj.lt;
+              qObj.gte = moment(startDate,'YYYYMMDDHHmmss').utc().format("YYYYMMDDHHmmss");
+              qObj.lt = moment(endDate,'YYYYMMDDHHmmss').utc().format("YYYYMMDDHHmmss");
+            }
+            
+
             eval(functionName + '(config, qObj, res,req)');
           }
           break;
@@ -102,6 +122,18 @@ app.post(pathList, (req, res) => {
 
 });
 
+function UtcDate(utc) {
+  var date = '';
+  if (utc >= 0) {
+      var utctime = new Date((utc));
+      date = utctime.toFormat('-HH:MI');
+  } else {
+      var utctime = new Date((utc * -1));
+      date = utctime.toFormat('+HH:MI');
+  }
+  console.log('date:',date);
+}
+
 function search(config, qObj, res,req) {
   var query = qObj.searchword;
   console.log("검색어 : " + query);
@@ -109,13 +141,6 @@ function search(config, qObj, res,req) {
     console.log("검색어가 입력되지 않았습니다.");
     util.writeError("검색어가 입력되지 않았습니다", res);
     return;
-  }
-
-  if (typeof category == "undefined" || typeof category == undefined || category == null || category == "") {
-    category = config.default_category;
-    if (typeof category == "undefined" || typeof category == undefined || category == null || category == "") {
-      qObj.category = "_all";
-    }
   }
 
   console.log("요청한 페이지는 " + qObj.from);
@@ -158,3 +183,73 @@ function getlangueges(config, qObj, res,req) {
 var server = app.listen(port, function () {
   console.log("Express server has started on port " + port);
 })
+
+
+
+// app.get(pathList, (req, res) => {
+//   console.log(util.getTimeStamp() + " " + "GET..." + req.url);
+//   var reqUrl = url.parse(req.url, true);
+//   var qObj = reqUrl.query; // 일반적인 사용
+
+//   console.log(reqUrl);
+
+//   var functionName = "";
+//   for (var index = 0; index < pathList.length; index++) {
+//     if (
+//       req.url
+//         .toLocaleLowerCase()
+//         .indexOf(pathList[index].toLocaleLowerCase()) == 0
+//     ) {
+//       var nIndex;
+//       var str = pathList[index];
+//       nIndex = str.indexOf("/");
+//       console.log("nIndex", nIndex);
+//       if (nIndex != -1) {
+//         functionName = str.substr(nIndex + 1, str.length);
+//         // eval(functionName)
+//         console.log(functionName + "hihi");
+//         qObj.cookie = req.headers.cookie;
+//         eval(functionName + '(config, qObj, res,req)');
+//       }
+//       break;
+//     }
+//   }
+  
+// });
+
+// function all(config, qObj, res, req){
+//   console.log("all-----------------------------");
+//   searchstart(config, qObj, res, req);
+// }
+
+// function person(config, qObj, res, req){
+//   console.log("person--------------------------");
+//   searchstart(config, qObj, res, req);
+// }
+
+// function approval(config, qObj, res, req){
+//   console.log("approval------------------------");
+//   searchstart(config, qObj, res, req);
+// }
+
+// function board(config, qObj, res, req){
+//   console.log("board---------------------------");
+//   searchstart(config, qObj, res, req);
+// }
+
+// function searchstart(config, qObj, res, req){
+//   var query = qObj.searchword;
+//   console.log("검색어 : " + query);
+//   if (typeof query == "undefined" || typeof query == undefined || query == null || query == "") {
+//     console.log("검색어가 입력되지 않았습니다.");
+//     util.writeError("검색어가 입력되지 않았습니다", res);
+//     return;
+//   }
+
+//   console.log("요청한 페이지는 " + qObj.from);
+//   console.log("사이즈는 " + qObj.size);
+//   console.log("url--");
+//   console.log(req.url);
+
+//   dosearch.search(config, qObj, res,req);
+// }
