@@ -144,6 +144,18 @@ async function Query(qObj) {
                 must.push(mustmultimatch);
             }
             bool.must = must;
+        }else{
+            for (var i = 0; i < searcharr.length; i++) {
+                var mustquery = {};
+                mustquery.operator = "AND";
+                mustquery.fields = fields;
+                mustquery.type = "phrase";
+                mustquery.query = searcharr[i];
+                var mustmultimatch = {};
+                mustmultimatch['multi_match'] = mustquery;
+                must.push(mustmultimatch);
+            }
+            bool.must = must;
         }
         query.bool = bool;
         esquery.query = query;
