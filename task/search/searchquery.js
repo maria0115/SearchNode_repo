@@ -85,9 +85,9 @@ async function Query(qObj) {
                 var should = [];
                 for (var j = 0; j < searcharr.length; j++) {
                     var mustquery = {};
-            mustquery.operator = "AND";
+            mustquery.operator = "OR";
             mustquery.fields = fields;
-            mustquery.type = "best_fields";
+            mustquery.type = "phrase";
                     mustquery.query = searcharr[j];
                     var mustmultimatch = {};
                     mustmultimatch['multi_match'] = mustquery;
@@ -102,9 +102,9 @@ async function Query(qObj) {
                 must.push(mustbool);
             } else {
                 var mustquery = {};
-            mustquery.operator = "AND";
+            mustquery.operator = "OR";
             mustquery.fields = fields;
-            mustquery.type = "best_fields";
+            mustquery.type = "phrase";
                 mustquery.query = qObj.searchwordarr[i];
                 var mustmultimatch = {};
                 mustmultimatch['multi_match'] = mustquery;
