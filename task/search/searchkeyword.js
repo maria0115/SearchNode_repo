@@ -1,9 +1,9 @@
 const query = require('./searchkeyword/query.js');
 const convert = require('./searchkeyword/convert.js');
-const config = require('../../config.json');
+// const configjson = require('../../config.json');
 const axios = require('axios');
 async function SearchKeyword(config, qObj, res, req) {
-    qObj.searchword = "김선호";
+    
     const keywordquery = await query.PopularKeyword(config, qObj, res, req);
 
     const id = config.elastic_id + ":" + config.elastic_pw;
@@ -32,6 +32,34 @@ async function SearchKeyword(config, qObj, res, req) {
 
 }
 
+async function InsertKeyword(config, qObj, res, req) {
+    // qObj.searchword = "1박 김선호";
+
+    const id = config.elastic_id + ":" + config.elastic_pw;
+    var authorization = Buffer.from(id, "utf8").toString('base64');
+    var url = `${config.elastic_address}/_bulk`;
+
+    var insertquery = await query.InsertKeywordQuery(config, qObj, res, req);
+    console.log(insertquery,"insertquery");
+    //elasticsearch 검색
+    await axios({
+        method: 'put',
+        url: url,
+        data: insertquery,
+        headers: {
+            Authorization: 'Basic ' + authorization,
+            'Content-Type': 'application/json'
+        }
+    })
+        .then((response) => {
+            console.log(response,"response")
+        }).catch(error => {
+            throw new Error(error);
+        });
+
+}
+
 module.exports = {
     SearchKeyword,
+    InsertKeyword,
 };

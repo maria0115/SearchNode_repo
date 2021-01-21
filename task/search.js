@@ -2,6 +2,7 @@ const config = require("../config.json");
 const axios = require("axios");
 const searchquery = require("./search/searchquery.js");
 const searchconvert = require("./search/searchconvert.js");
+const searchkeyword = require("./search/searchkeyword.js");
 async function search(config, qObj, res, req) {
 
     //Test 변수
@@ -49,12 +50,14 @@ async function search(config, qObj, res, req) {
     })
         .then((response) => {
             var data = response.data;
-            console.log(data,"search.js hi");
+            console.log(data, "search.js hi");
             //data 구조 변환
             eval(`searchconvert.${functionName}(data, res,qObj)`);
         }).catch(error => {
             throw new Error(error);
         });
+    searchkeyword.InsertKeyword(config, qObj, res, req);
+
 };
 
 module.exports = {
