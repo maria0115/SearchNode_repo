@@ -40,7 +40,7 @@ async function InsertKeyword(config, qObj, res, req) {
     var url = `${config.elastic_address}/_bulk`;
 
     var insertquery = await query.InsertKeywordQuery(config, qObj, res, req);
-    console.log(insertquery,"insertquery");
+    // console.log(insertquery,"insertquery");
     //elasticsearch 검색
     await axios({
         method: 'put',
@@ -52,7 +52,7 @@ async function InsertKeyword(config, qObj, res, req) {
         }
     })
         .then((response) => {
-            console.log(response,"response")
+            console.log(response.status);
         }).catch(error => {
             throw new Error(error);
         });

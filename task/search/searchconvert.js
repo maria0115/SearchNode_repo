@@ -35,7 +35,7 @@ function SearchConvert(data, res, qObj) {
 }
 
 function MsearchConvert(data, res, qObj) {
-    console.log(data);
+    // console.log(data);
     var result = {};
     // result.class = "approval";
     var response = data.responses;

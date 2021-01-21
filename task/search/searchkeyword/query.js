@@ -22,7 +22,7 @@ async function InsertKeywordQuery(config, qObj, res, req){
         indexquery['_index'] = config.keyword_index;
         indexquery['_type'] = "_doc";
         indexquery['_id'] = `k${Math.floor(Math.random() *Math.random()*1000000000000000)}`
-        console.log(indexquery['_id'],"indexquery['_id']");
+        // console.log(indexquery['_id'],"indexquery['_id']");
         index.index = indexquery;
         var query = {};
         query.keyword = searchwordarr[i];
