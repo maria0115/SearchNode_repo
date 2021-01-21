@@ -12,7 +12,7 @@ async function search(config, qObj, res, req) {
     // qObj.gte = "now-7M/d";
     // qObj.pagenum = 0;
     // qObj.searchword = "1박 강예은";
-    // qObj.searchwordarr = ["2일","김선호"];
+    // qObj.searchwordarr = ["호랑이 김선호", "1박","특별"];
     // qObj.size = 5;
     // qObj.utc = "-540"
     // qObj.dateType = "season";

@@ -2,6 +2,7 @@
 "default_category":["dept","person","board","approval"],
 "default_field":["subject","body","author"],
 "default_index":"search",
+"keyword_index":"searchkeyword",
 "elastic_address": "http://125.7.235.202:19200",
 "elastic_id":"elastic",
 "elastic_pw":"123!@#qwe",

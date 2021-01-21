@@ -10,11 +10,11 @@ const keyword = require("./task/search/searchkeyword.js");
 const log = console.log;
 
 var pathList = [
+  "/keywordofsearch",
   "/search",
   "/create",
   "/getlangueges",
   "/schema",
-  "/searchkeyword",
   // "/all",
   // "/person",
   // "/approval",
@@ -44,6 +44,9 @@ app.post(pathList, (req, res) => {
       var postData = body;
       // console.log(postData);
       qObj = JSON.parse(postData);
+      if(qObj === undefined){
+        qObj = {};
+      }
       console.log(util.getTimeStamp() + " " + "POST..." + req.url);
 
       console.log("찾았다");
@@ -113,7 +116,7 @@ app.post(pathList, (req, res) => {
               qObj.lt = moment(endDate,'YYYYMMDDHHmmss').utc().format("YYYYMMDDHHmmss");
             }
             
-
+console.log(functionName,"functionname");
             eval(functionName + '(config, qObj, res,req)');
           }
           break;
@@ -182,7 +185,7 @@ function getlangueges(config, qObj, res,req) {
 
 }
 
-function searchKeyword(config, qObj, res, req){
+function keywordofsearch(config, qObj, res, req){
 
   keyword.SearchKeyword(config, qObj, res, req);
 
