@@ -7,20 +7,20 @@ function SearchConvert(data, res, qObj) {
     if (resultdata.total > 0) {
         for (var i = 0; i < resultdata.hits.length; i++) {
             
-            if(resultdata.hits[i]['_source'].category=='person'){
-                var body = resultdata.hits[i]['_source'].body;
+            var resdata = resultdata.hits[i]['_source'];
+            if(resdata.category=='person'){
+                var body = resdata.body;
                 var rebody = body.replace(/'/gi,'"');
                 var jsonBody = JSON.parse(rebody);
-                resultdata.hits[i]['_source'].jobTitle = jsonBody.jobTitle;
-                resultdata.hits[i]['_source'].jobPosition = jsonBody.jobPosition;
-                resultdata.hits[i]['_source'].company = jsonBody.company;
-                resultdata.hits[i]['_source'].phone = jsonBody.phone;
-                resultdata.hits[i]['_source'].tel = jsonBody.tel;
-                resultdata.hits[i]['_source'].email = jsonBody.email;
-                resultdata.hits[i]['_source'].job = jsonBody.job;
+                resdata.jobTitle = jsonBody.jobTitle;
+                resdata.jobPosition = jsonBody.jobPosition;
+                resdata.company = jsonBody.company;
+                resdata.phone = jsonBody.phone;
+                resdata.tel = jsonBody.tel;
+                resdata.email = jsonBody.email;
+                resdata.job = jsonBody.job;
             }
 
-            var resdata = resultdata.hits[i]['_source']
             d.push(resdata);
         }
 
@@ -46,19 +46,19 @@ function MsearchConvert(data, res, qObj) {
         var d = [];
         if (resdata.hits.length > 0) {
             for (var j = 0; j < resdata.hits.length; j++) {
-                var resd = resdata.hits[j]['_source']
 
-                if(resdata.hits[j]['_source'].category=='person'){
-                    var body = resdata.hits[i]['_source'].body;
+                var resd = resdata.hits[j]['_source']
+                if(resd.category=='person'){
+                    var body = resd.body;
                     var rebody = body.replace(/'/gi,'"');
                     var jsonBody = JSON.parse(rebody);
-                    resdata.hits[j]['_source'].jobTitle = jsonBody.jobTitle;
-                    resdata.hits[j]['_source'].jobPosition = jsonBody.jobPosition;
-                    resdata.hits[j]['_source'].company = jsonBody.company;
-                    resdata.hits[j]['_source'].phone = jsonBody.phone;
-                    resdata.hits[j]['_source'].tel = jsonBody.tel;
-                    resdata.hits[j]['_source'].email = jsonBody.email;
-                    resdata.hits[j]['_source'].job = jsonBody.job;
+                    resd.jobTitle = jsonBody.jobTitle;
+                    resd.jobPosition = jsonBody.jobPosition;
+                    resd.company = jsonBody.company;
+                    resd.phone = jsonBody.phone;
+                    resd.tel = jsonBody.tel;
+                    resd.email = jsonBody.email;
+                    resd.job = jsonBody.job;
                 }
 
                 d.push(resd);
