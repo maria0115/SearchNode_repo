@@ -6,6 +6,7 @@ const config = require("./config.json");
 const util = require("./lib/util.js");
 const dosearch = require("./task/search.js");
 const languege = require("./task/langueges.js");
+const keyword = require("./task/search/searchkeyword.js");
 const log = console.log;
 
 var pathList = [
@@ -13,6 +14,7 @@ var pathList = [
   "/create",
   "/getlangueges",
   "/schema",
+  "/searchkeyword",
   // "/all",
   // "/person",
   // "/approval",
@@ -177,6 +179,12 @@ function getlangueges(config, qObj, res,req) {
   }
 
   languege.getlangueges(config, qObj, res,req);
+
+}
+
+function searchKeyword(config, qObj, res, req){
+
+  keyword.SearchKeyword(config, qObj, res, req);
 
 }
 
