@@ -9,6 +9,7 @@ async function PopularKeyword(qObj,config) {
     stations.terms = terms;
     aggs.stations = stations;
     query.aggs = aggs;
+    if (qObj.gte !== "default") {
     var squery = {};
     var created = {};
     created.gte = qObj.gte;
@@ -17,8 +18,8 @@ async function PopularKeyword(qObj,config) {
     range.created = created;
     squery.range = range;
     query.query = squery;
+    }
     return query;
-
 }
 async function RealationKeyword(qObj,config) {
     var searchwordarr = qObj.searchword.split(' ');
