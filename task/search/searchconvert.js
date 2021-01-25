@@ -1,50 +1,19 @@
-function SearchConvert(data, res, qObj) {
-    var result = {};
-    // console.log('searchconvert', data);
-    var d = [];
-    var resultdata = data.hits;
-    console.log(resultdata,"searchconvert hi");
-    if (resultdata.total > 0) {
-        for (var i = 0; i < resultdata.hits.length; i++) {
-            
-            var resdata = resultdata.hits[i]['_source'];
-            if(resdata.category=='person'){
-                var body = resdata.body;
-                var rebody = body.replace(/'/gi,'"');
-                var jsonBody = JSON.parse(rebody);
-                resdata.jobTitle = jsonBody.jobTitle;
-                resdata.jobPosition = jsonBody.jobPosition;
-                resdata.company = jsonBody.company;
-                resdata.phone = jsonBody.phone;
-                resdata.tel = jsonBody.tel;
-                resdata.email = jsonBody.email;
-                resdata.job = jsonBody.job;
-            }
-
-            d.push(resdata);
-        }
-
-        var category = {};
-        category.total_cnt = resultdata.total;
-        category.data = d;
-        result[qObj.class] = category;
-    }
-    res.statusCode = 200;
-    res.setHeader("Content-type", "application/json; charset=UTF-8");
-    res.send(JSON.stringify(result));
-}
-
-function MsearchConvert(data, res, qObj) {
-    // console.log(data);
+async function MsearchConvert(data, res,qObj) {
+    // console.log(JSON.stringify(data),"-----------------data");
     var result = {};
     // result.class = "approval";
     var response = data.responses;
     var dataquery = {};
+    var keywordIndex = 0;
     for (var i = 0; i < response.length; i++) {
         var resdata = response[i].hits;
         // console.log(resdata,"resdata");
+        if(response[i].aggregations){
+            keywordIndex = i;
+            break;
+        }
         var d = [];
-        if (resdata.hits.length > 0) {
+        if (resdata.hits.length > 0 && resdata.hits!==undefined) {
             for (var j = 0; j < resdata.hits.length; j++) {
 
                 var resd = resdata.hits[j]['_source']
@@ -60,7 +29,6 @@ function MsearchConvert(data, res, qObj) {
                     resd.email = jsonBody.email;
                     resd.job = jsonBody.job;
                 }
-
                 d.push(resd);
             }
             var category = resdata.hits[0]['_source'].category;
@@ -73,15 +41,21 @@ function MsearchConvert(data, res, qObj) {
         }
         // result.data = dataquery;
     }
-    console.log(dataquery);
+    result.data = dataquery;
+    for (var i = keywordIndex; i < response.length; i++) {
 
+    }
+    result.popular = response[keywordIndex].aggregations.stations.buckets;
+    result.relation = response[keywordIndex+1].aggregations.stations.buckets;
+    console.log(result);
     res.statusCode = 200;
     res.setHeader("Content-type", "application/json; charset=UTF-8");
-    res.send(JSON.stringify(dataquery));
+    res.send(JSON.stringify(result));
+
+    
 
 }
 
 module.exports = {
-    SearchConvert,
     MsearchConvert,
 };

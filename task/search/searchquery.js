@@ -1,13 +1,8 @@
 const config = require("../../config.json");
+const searchKeywordQuery = require('./searchkeyword/query.js');
 // use new Date
 require('date-utils');
 
-// _search
-async function SearchQuery(qObj) {
-    console.log('왜여기로오지');
-    var result = await Query(qObj);
-    return result;
-}
 // _msearch
 async function MsearchQuery(qObj) {
     console.log("MsearchQuery 여기로 왔다")
@@ -22,7 +17,12 @@ async function MsearchQuery(qObj) {
     // "size":5,"from":0,"sort":{"created":{"order":"desc"}}}
     var q = await Query(qObj);
     var stringquery = '';
-    var category = config.default_category;
+    
+    if(qObj.class ==='all'){
+        var category = config.default_category;
+    }else{
+        var category = qObj.class; 
+    }
     for (var i = 0; i < category.length; i++) {
         var query = {};
         var smallquery = {};
@@ -36,14 +36,22 @@ async function MsearchQuery(qObj) {
         stringquery += JSON.stringify(index) + "\n";
         stringquery += JSON.stringify(query[i]) + "\n";
     }
-    console.log(stringquery, "stringquery");
+    //인기검색어
+    const keywordquery = await searchKeywordQuery.PopularKeyword(qObj, config);
+    var keywordindex = {};
+    keywordindex.index = config.keyword_index;
+    stringquery += JSON.stringify(keywordindex) + "\n";
+    stringquery += JSON.stringify(keywordquery) + "\n";
+
+    var RealationKeyword = await searchKeywordQuery.RealationKeyword(qObj, config);
+    stringquery += JSON.stringify(keywordindex) + "\n";
+    stringquery += JSON.stringify(RealationKeyword) + "\n";
+
     return stringquery;
 }
 async function Query(qObj) {
     console.log(qObj);
     var esquery = {};
-    console.log(qObj.searchwordarr);
-    console.log(qObj.searchword);
     var query = {};
     if (qObj.searchword !== '') {
         var bool = {};
@@ -85,15 +93,15 @@ async function Query(qObj) {
                 var should = [];
                 for (var j = 0; j < searcharr.length; j++) {
                     var mustquery = {};
-            mustquery.operator = "OR";
-            mustquery.fields = fields;
-            mustquery.type = "phrase";
+                    mustquery.operator = "OR";
+                    mustquery.fields = fields;
+                    mustquery.type = "phrase";
                     mustquery.query = searcharr[j];
                     var mustmultimatch = {};
                     mustmultimatch['multi_match'] = mustquery;
-                    console.log(mustmultimatch,"mustmultimatch");
+                    console.log(mustmultimatch, "mustmultimatch");
                     should.push(mustmultimatch);
-                    console.log(should,"should");
+                    console.log(should, "should");
                     var shouldinmust = {};
                     shouldinmust.should = should;
                     var mustbool = {};
@@ -102,9 +110,9 @@ async function Query(qObj) {
                 must.push(mustbool);
             } else {
                 var mustquery = {};
-            mustquery.operator = "OR";
-            mustquery.fields = fields;
-            mustquery.type = "phrase";
+                mustquery.operator = "OR";
+                mustquery.fields = fields;
+                mustquery.type = "phrase";
                 mustquery.query = qObj.searchwordarr[i];
                 var mustmultimatch = {};
                 mustmultimatch['multi_match'] = mustquery;
@@ -145,6 +153,5 @@ function UtcDate(utc) {
 }
 
 module.exports = {
-    SearchQuery,
     MsearchQuery,
 };

@@ -3,6 +3,7 @@ const axios = require("axios");
 const searchquery = require("./search/searchquery.js");
 const searchconvert = require("./search/searchconvert.js");
 const searchkeyword = require("./search/searchkeyword.js");
+
 async function search(config, qObj, res, req) {
 
     //Test 변수
@@ -13,7 +14,7 @@ async function search(config, qObj, res, req) {
     // qObj.gte = "now-7M/d";
     // qObj.pagenum = 0;
     // qObj.searchword = "1박 강예은";
-    // qObj.searchwordarr = ["호랑이 김선호", "1박","특별"];
+    // qObj.searchwordarr = ["호랑이 김선호", "1박", "특별"];
     // qObj.size = 5;
     // qObj.utc = "-540"
     // qObj.dateType = "season";
@@ -26,19 +27,12 @@ async function search(config, qObj, res, req) {
     //msearch or search query 받기
     var stringquery = "";
     var functionName = "";
-    if (qObj.class === "all") {
-        stringquery = await searchquery.MsearchQuery(qObj);
-        console.log('MsearchConvert 여기로 들어옴');
-        functionName = "MsearchConvert";
-        url += "_msearch";
-    } else {
-        stringquery = await searchquery.SearchQuery(qObj);
-        console.log(JSON.stringify(stringquery));
-        functionName = "SearchConvert";
-        url += "_search";
-    }
 
-    //elasticsearch 검색
+    stringquery = await searchquery.MsearchQuery(qObj);
+    console.log('MsearchConvert 여기로 들어옴');
+    functionName = "MsearchConvert";
+    url += "_msearch";
+
     await axios({
         method: 'post',
         url: url,
@@ -50,12 +44,14 @@ async function search(config, qObj, res, req) {
     })
         .then((response) => {
             var data = response.data;
-            console.log(data, "search.js hi");
+            console.log('data시작');
+            console.log(JSON.stringify(data), "search.js hi");
             //data 구조 변환
-            eval(`searchconvert.${functionName}(data, res,qObj)`);
+            eval(`searchconvert.${functionName}(data,res,qObj)`);
         }).catch(error => {
             throw new Error(error);
         });
+
     searchkeyword.InsertKeyword(config, qObj, res, req);
 
 };

@@ -10,7 +10,6 @@ const keyword = require("./task/search/searchkeyword.js");
 const log = console.log;
 
 var pathList = [
-  "/keywordofsearch",
   "/search",
   "/create",
   "/getlangueges",
@@ -182,12 +181,6 @@ function getlangueges(config, qObj, res,req) {
   }
 
   languege.getlangueges(config, qObj, res,req);
-
-}
-
-function keywordofsearch(config, qObj, res, req){
-
-  keyword.SearchKeyword(config, qObj, res, req);
 
 }
 
