@@ -7,17 +7,19 @@ const searchkeyword = require("./search/searchkeyword.js");
 async function search(config, qObj, res, req) {
 
     //Test 변수
-    // qObj.class = "all";
-    // qObj.aOrd = "accuracy";
-    // qObj.accOrrec = "created";
-    // qObj.fieldname = "all";
-    // qObj.gte = "now-7M/d";
-    // qObj.pagenum = 0;
-    // qObj.searchword = "1박 강예은";
-    // qObj.searchwordarr = ["호랑이 김선호", "1박", "특별"];
-    // qObj.size = 5;
-    // qObj.utc = "-540"
-    // qObj.dateType = "season";
+    qObj.class = "all";
+    qObj.aOrd = "accuracy";
+    qObj.accOrrec = "created";
+    qObj.fieldname = "all";
+    qObj.gte = "now-7M/d";
+    qObj.lt = "now";
+    qObj.pagenum = 0;
+    qObj.searchword = " ";
+    qObj.searchwordarr = ["김선호"];
+    qObj.size = 5;
+    qObj.utc = "-540"
+    qObj.dateType = "season";
+    qObj.created = "20210125T170331+09:00";
 
     //elasticsearch Authorization
     const id = config.elastic_id + ":" + config.elastic_pw;
@@ -29,6 +31,7 @@ async function search(config, qObj, res, req) {
     var functionName = "";
 
     stringquery = await searchquery.MsearchQuery(qObj);
+    console.log(stringquery,"stringquery");
     console.log('MsearchConvert 여기로 들어옴');
     functionName = "MsearchConvert";
     url += "_msearch";
@@ -44,8 +47,8 @@ async function search(config, qObj, res, req) {
     })
         .then((response) => {
             var data = response.data;
-            console.log('data시작');
-            console.log(JSON.stringify(data), "search.js hi");
+            // console.log('data시작');
+            // console.log(JSON.stringify(data), "search.js hi");
             //data 구조 변환
             eval(`searchconvert.${functionName}(data,res,qObj)`);
         }).catch(error => {

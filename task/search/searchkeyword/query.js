@@ -9,6 +9,14 @@ async function PopularKeyword(qObj,config) {
     stations.terms = terms;
     aggs.stations = stations;
     query.aggs = aggs;
+    var squery = {};
+    var created = {};
+    created.gte = qObj.gte;
+    created.lt = qObj.lt;
+    var range = {};
+    range.created = created;
+    squery.range = range;
+    query.query = squery;
     return query;
 
 }
@@ -52,9 +60,11 @@ async function InsertKeywordQuery(qObj,config) {
     index.index = indexquery;
     var query = {};
     query.keyword = qObj.searchword;
+    query.created = qObj.created;
 
     stringquery += JSON.stringify(index) + "\n";
     stringquery += JSON.stringify(query) + "\n";
+    console.log(stringquery,"insertstringquery");
     return stringquery;
 }
 

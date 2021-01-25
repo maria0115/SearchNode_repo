@@ -142,8 +142,9 @@ function search(config, qObj, res,req) {
   var query = qObj.searchword;
   console.log("검색어 : " + query);
   if (typeof query == "undefined" || typeof query == undefined || query == null || query == "") {
-    console.log("검색어가 입력되지 않았습니다.");
-    util.writeError("검색어가 입력되지 않았습니다", res);
+    // console.log("검색어가 입력되지 않았습니다.");
+    // util.writeError("검색어가 입력되지 않았습니다", res);
+    qObj.searchword = " ";
     return;
   }
 
