@@ -13,7 +13,7 @@ async function MsearchConvert(data, res,qObj) {
             break;
         }
         var d = [];
-        if (resdata.hits.length > 0 && resdata.hits!==undefined) {
+        if (resdata.hits.length > 0) {
             for (var j = 0; j < resdata.hits.length; j++) {
 
                 var resd = resdata.hits[j]['_source']
