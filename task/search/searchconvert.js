@@ -3,6 +3,7 @@ async function MsearchConvert(data, res,qObj) {
     var result = {};
     // result.class = "approval";
     var response = data.responses;
+    console.log(response);
     var dataquery = {};
     var keywordIndex = 0;
     for (var i = 0; i < response.length; i++) {
@@ -15,21 +16,26 @@ async function MsearchConvert(data, res,qObj) {
         var d = [];
         if (resdata.hits.length > 0) {
             for (var j = 0; j < resdata.hits.length; j++) {
+                // console.log(resd.category,"category");
+                if(resdata.hits[j]['_source']>0){
 
-                var resd = resdata.hits[j]['_source']
-                if(resd.category=='person'){
-                    var body = resd.body;
-                    var rebody = body.replace(/'/gi,'"');
-                    var jsonBody = JSON.parse(rebody);
-                    resd.jobTitle = jsonBody.jobTitle;
-                    resd.jobPosition = jsonBody.jobPosition;
-                    resd.company = jsonBody.company;
-                    resd.phone = jsonBody.phone;
-                    resd.tel = jsonBody.tel;
-                    resd.email = jsonBody.email;
-                    resd.job = jsonBody.job;
+                    var resd = resdata.hits[j].length;
+                    if(resd.category=='person'){
+                        var body = resd.body;
+                        var rebody = body.replace(/'/gi,'"');
+                        var jsonBody = JSON.parse(rebody);
+                        resd.jobTitle = jsonBody.jobTitle;
+                        resd.jobPosition = jsonBody.jobPosition;
+                        resd.company = jsonBody.company;
+                        resd.phone = jsonBody.phone;
+                        resd.tel = jsonBody.tel;
+                        resd.email = jsonBody.email;
+                        resd.job = jsonBody.job;
+                    }
                 }
+
                 d.push(resd);
+                console.log('for문 성공적',j);
             }
             var category = resdata.hits[0]['_source'].category;
             var total_cnt = resdata.total;
