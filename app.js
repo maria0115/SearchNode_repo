@@ -7,6 +7,7 @@ const util = require("./lib/util.js");
 const dosearch = require("./task/search.js");
 const languege = require("./task/langueges.js");
 const keyword = require("./task/search/searchkeyword.js");
+const cookie = require('cookie');
 const log = console.log;
 
 var pathList = [
@@ -116,6 +117,8 @@ app.post(pathList, (req, res) => {
               qObj.kgte = startMonth;
               qObj.klt = utcTime;
             }
+            qObj.sessionId = "DomAuthSessId="+cookie.parse(qObj.cookie).DomAuthSessId;
+            console.log('qObj.sessionId:',qObj.sessionId);
             
             console.log(functionName,"functionname");
             eval(functionName + '(config, qObj, res,req)');
@@ -151,7 +154,6 @@ function search(config, qObj, res,req) {
     // console.log("검색어가 입력되지 않았습니다.");
     // util.writeError("검색어가 입력되지 않았습니다", res);
     qObj.searchword = " ";
-    return;
   }
 
   console.log("요청한 페이지는 " + qObj.from);
