@@ -9,9 +9,9 @@ async function InsertKeyword(config, qObj, res, req) {
     var authorization = Buffer.from(id, "utf8").toString('base64');
     var url = `${config.elastic_address}/_bulk`;
 
-    if(qObj.searchword!==" "){
-        var insertquery = await query.InsertKeywordQuery(qObj,config);
-        console.log(insertquery,"insertquery");
+    if (qObj.searchword !== " ") {
+        var insertquery = await query.InsertKeywordQuery(qObj, config);
+        console.log(insertquery, "insertquery");
         //elasticsearch 검색
         await axios({
             method: 'put',
@@ -29,6 +29,34 @@ async function InsertKeyword(config, qObj, res, req) {
             });
     }
 
+
+}
+
+async function PopularSearch(config, qObj, res, req) {
+    var stringquery = await query.PopularKeyword(qObj, config);
+
+    const id = config.elastic_id + ":" + config.elastic_pw;
+    var authorization = Buffer.from(id, "utf8").toString('base64');
+    var url = `${config.elastic_address}/${config.default_index}/_search`;
+
+    //elasticsearch 검색
+    await axios({
+        method: 'post',
+        url: url,
+        data: stringquery,
+        headers: {
+            Authorization: 'Basic ' + authorization,
+            'Content-Type': 'application/json'
+        }
+    })
+        .then((response) => {
+            var result = response.aggregations.stations.buckets;
+            res.statusCode = 200;
+            res.setHeader("Content-type", "application/json; charset=UTF-8");
+            res.send(JSON.stringify(result));
+        }).catch(error => {
+            throw new Error(error);
+        });
 
 }
 
