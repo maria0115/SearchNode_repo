@@ -64,4 +64,5 @@ async function PopularSearch(config, qObj, res, req) {
 
 module.exports = {
     InsertKeyword,
+    PopularSearch,
 };
