@@ -37,7 +37,9 @@ async function PopularSearch(config, qObj, res, req) {
 
     const id = config.elastic_id + ":" + config.elastic_pw;
     var authorization = Buffer.from(id, "utf8").toString('base64');
-    var url = `${config.elastic_address}/${config.default_index}/_search`;
+    var url = `${config.elastic_address}/${config.keyword_index}/_search`;
+
+    console.log(stringquery);
 
     //elasticsearch 검색
     await axios({

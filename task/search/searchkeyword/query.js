@@ -13,6 +13,7 @@ async function PopularKeyword(qObj, config) {
     var created = {};
     created.gte = qObj.kgte;
     created.lt = qObj.klt;
+    created.format = "yyyyMMddHHmmss";
     var range = {};
     range.created = created;
     squery.range = range;
