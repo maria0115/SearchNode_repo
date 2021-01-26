@@ -9,16 +9,14 @@ async function PopularKeyword(qObj, config) {
     stations.terms = terms;
     aggs.stations = stations;
     query.aggs = aggs;
-    if (qObj.gte !== "default") {
-        var squery = {};
-        var created = {};
-        created.gte = qObj.gte;
-        created.lt = qObj.lt;
-        var range = {};
-        range.created = created;
-        squery.range = range;
-        query.query = squery;
-    }
+    var squery = {};
+    var created = {};
+    created.gte = qObj.kgte;
+    created.lt = qObj.klt;
+    var range = {};
+    range.created = created;
+    squery.range = range;
+    query.query = squery;
     return query;
 }
 async function RealationKeyword(qObj, config) {
