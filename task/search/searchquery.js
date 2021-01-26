@@ -21,7 +21,8 @@ async function MsearchQuery(qObj) {
     if(qObj.class ==='all'){
         var category = config.default_category;
     }else{
-        var category = qObj.class; 
+        var category = [];
+        category.push(qObj.class); 
     }
     for (var i = 0; i < category.length; i++) {
         var query = {};

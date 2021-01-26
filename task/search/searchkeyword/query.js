@@ -1,5 +1,5 @@
 
-async function PopularKeyword(qObj,config) {
+async function PopularKeyword(qObj, config) {
     var query = {};
     query.size = 0;
     var aggs = {};
@@ -10,21 +10,21 @@ async function PopularKeyword(qObj,config) {
     aggs.stations = stations;
     query.aggs = aggs;
     if (qObj.gte !== "default") {
-    var squery = {};
-    var created = {};
-    created.gte = qObj.gte;
-    created.lt = qObj.lt;
-    var range = {};
-    range.created = created;
-    squery.range = range;
-    query.query = squery;
+        var squery = {};
+        var created = {};
+        created.gte = qObj.gte;
+        created.lt = qObj.lt;
+        var range = {};
+        range.created = created;
+        squery.range = range;
+        query.query = squery;
     }
     return query;
 }
-async function RealationKeyword(qObj,config) {
+async function RealationKeyword(qObj, config) {
     var searchwordarr = qObj.searchword.split(' ');
     var should = [];
-    for(var i = 0; i < searchwordarr.length; i++) {
+    for (var i = 0; i < searchwordarr.length; i++) {
         var multimatch = {};
         multimatch.query = searchwordarr[i];
         multimatch.fields = "keyword.search";
@@ -36,7 +36,7 @@ async function RealationKeyword(qObj,config) {
     }
     var bool = {};
     bool.should = should;
-    var must  = {};
+    var must = {};
     must.bool = bool;
 
     var bigbool = {};
@@ -44,13 +44,13 @@ async function RealationKeyword(qObj,config) {
     var query = {};
     query.bool = bigbool;
 
-    var q = await PopularKeyword(qObj,config);
+    var q = await PopularKeyword(qObj, config);
     q.query = query;
     return q;
 
 }
 
-async function InsertKeywordQuery(qObj,config) {
+async function InsertKeywordQuery(qObj, config) {
     var stringquery = '';
     var index = {};
     var indexquery = {};
@@ -65,7 +65,7 @@ async function InsertKeywordQuery(qObj,config) {
 
     stringquery += JSON.stringify(index) + "\n";
     stringquery += JSON.stringify(query) + "\n";
-    console.log(stringquery,"insertstringquery");
+    console.log(stringquery, "insertstringquery");
     return stringquery;
 }
 
