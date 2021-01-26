@@ -14,6 +14,7 @@ var pathList = [
   "/create",
   "/getlangueges",
   "/schema",
+  "/popular",
   // "/all",
   // "/person",
   // "/approval",
@@ -78,16 +79,11 @@ app.post(pathList, (req, res) => {
             var _1Wago = moment().utc().subtract(1, 'w').format("YYYYMMDDHHmmss");//1주전
             var _1Mago = moment().utc().subtract(1, 'M').format("YYYYMMDDHHmmss");//1달전
             var _1Yago = moment().utc().subtract(1, 'y').format("YYYYMMDDHHmmss");//1년전
-            console.log('현재시간:',moment().format("YYYYMMDDHHmmss"));
-            console.log('utc시간:',utcTime);
-            console.log('1시간전:',_1Hago);
-            console.log('1일전:',_1Dago);
-            console.log('1주전:',_1Wago);
-            console.log('1달전:',_1Mago);
-            console.log('1년전:',_1Yago);
-            console.log('qObj.gte:',qObj.gte);
-            console.log('qObj.lt:',qObj.lt);
-
+            var startWeek =moment().startOf("week").utc().format("YYYYMMDDHHmmss");//이번주 첫날
+            var startMonth =moment().startOf("month").utc().format("YYYYMMDDHHmmss");//이번달 첫날
+            
+            qObj.kgte = startWeek;
+            qObj.klt = utcTime;
             if(qObj.gte == 'now-1h/s'){
               qObj.gte = _1Hago;
               qObj.lt = utcTime;
@@ -113,9 +109,15 @@ app.post(pathList, (req, res) => {
               var endDate = qObj.lt;
               qObj.gte = moment(startDate,'YYYYMMDDHHmmss').utc().format("YYYYMMDDHHmmss");
               qObj.lt = moment(endDate,'YYYYMMDDHHmmss').utc().format("YYYYMMDDHHmmss");
+            }else if(qObj.gte =='thisWeek'){
+              qObj.kgte = startWeek;
+              qObj.klt = utcTime;
+            }else if(qObj.gte =='thisMonth'){
+              qObj.kgte = startMonth;
+              qObj.klt = utcTime;
             }
             
-console.log(functionName,"functionname");
+            console.log(functionName,"functionname");
             eval(functionName + '(config, qObj, res,req)');
           }
           break;
@@ -125,6 +127,10 @@ console.log(functionName,"functionname");
     })
 
 });
+
+function popular(config, qObj, res,req){
+  keyword.PopularSearch(config, qObj, res,req);
+}
 
 function UtcDate(utc) {
   var date = '';

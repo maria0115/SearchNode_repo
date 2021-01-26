@@ -52,7 +52,8 @@ async function PopularSearch(config, qObj, res, req) {
         }
     })
         .then((response) => {
-            var result = response.aggregations.stations.buckets;
+            var result = response.data.aggregations.stations.buckets;
+            console.log('result',result);
             res.statusCode = 200;
             res.setHeader("Content-type", "application/json; charset=UTF-8");
             res.send(JSON.stringify(result));
