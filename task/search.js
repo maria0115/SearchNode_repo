@@ -7,19 +7,34 @@ const searchkeyword = require("./search/searchkeyword.js");
 async function search(config, qObj, res, req) {
 
     //Test 변수
-    // qObj.class = "all";
+    // qObj.class = "approval";
     // qObj.aOrd = "accuracy";
     // qObj.accOrrec = "created";
     // qObj.fieldname = "all";
-    // qObj.gte = "now-7M/d";
+    // qObj.gte = "default";
     // qObj.lt = "now";
     // qObj.pagenum = 0;
     // qObj.searchword = " ";
-    // qObj.searchwordarr = ["김선호"];
+    // qObj.searchwordarr = [];
     // qObj.size = 5;
     // qObj.utc = "-540"
     // qObj.dateType = "season";
     // qObj.created = "20210125T170331+09:00";
+    var url = `${config.getReaders}`;
+
+    await axios({
+            method: 'get',
+            url: url,
+            headers: {
+                "Cookie": qObj.sessionId,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((response) => {
+                console.log(response.data,"도미노!!!!!!!");
+            }).catch(error => {
+                throw new Error(error);
+            });
 
     //elasticsearch Authorization
     const id = config.elastic_id + ":" + config.elastic_pw;

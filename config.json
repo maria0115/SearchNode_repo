@@ -6,5 +6,6 @@
 "elastic_address": "http://125.7.235.202:19200",
 "elastic_id":"elastic",
 "elastic_pw":"123!@#qwe",
-"languages":"http://localhost/homepage.nsf/api/data/collections/name/language"
+"languages":"http://localhost/homepage.nsf/api/data/collections/name/language",
+"getReaders":"http://localhost/homepage.nsf/test1?OpenPage"
 }
