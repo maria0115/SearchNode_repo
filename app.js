@@ -12,7 +12,6 @@ const log = console.log;
 
 var pathList = [
   "/search",
-  "/create",
   "/getlangueges",
   "/schema",
   "/popular",
@@ -150,11 +149,24 @@ function UtcDate(utc) {
 function search(config, qObj, res,req) {
   var query = qObj.searchword;
   console.log("검색어 : " + query);
-  if (typeof query == "undefined" || typeof query == undefined || query == null || query == "") {
+  if (typeof query == "undefined" || typeof query == undefined || query == null || query == ""|| query == " ") {
     // console.log("검색어가 입력되지 않았습니다.");
     // util.writeError("검색어가 입력되지 않았습니다", res);
     qObj.searchword = " ";
+    qObj.searchwordarr = [];
   }
+  
+  var count = 0;
+  for(var i=0; i<=query.length; i++){
+    var squery = query.split(" ");
+    if(squery[i]==""){
+        if(count==query.length){
+          qObj.searchwordarr = [];
+        }
+        count+=1;
+    }
+  }
+  
 
   console.log("요청한 페이지는 " + qObj.from);
   console.log("사이즈는 " + qObj.size);
@@ -163,21 +175,6 @@ function search(config, qObj, res,req) {
 
   dosearch.search(config, qObj, res,req)
 
-}
-
-function create(config, qObj, res,req) {
-  var category = qObj.category;
-  if (typeof category == "undefined" || typeof category == undefined || category == null || category == "") {
-    category = config.default_category;
-    if (typeof category == "undefined" || typeof category == undefined || category == null || category == "") {
-      qObj.category = "_all";
-    }
-  }
-
-  console.log("요청한 페이지는 " + qObj.page);
-  console.log("사이즈는 " + qObj.size);
-
-  dosearch.create(config, qObj, res,req);
 }
 
 function getlangueges(config, qObj, res,req) {
@@ -197,7 +194,20 @@ var server = app.listen(port, function () {
   console.log("Express server has started on port " + port);
 })
 
+// function create(config, qObj, res,req) {
+//   var category = qObj.category;
+//   if (typeof category == "undefined" || typeof category == undefined || category == null || category == "") {
+//     category = config.default_category;
+//     if (typeof category == "undefined" || typeof category == undefined || category == null || category == "") {
+//       qObj.category = "_all";
+//     }
+//   }
 
+//   console.log("요청한 페이지는 " + qObj.page);
+//   console.log("사이즈는 " + qObj.size);
+
+//   dosearch.create(config, qObj, res,req);
+// }
 
 // app.get(pathList, (req, res) => {
 //   console.log(util.getTimeStamp() + " " + "GET..." + req.url);
