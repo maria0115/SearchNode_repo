@@ -161,6 +161,7 @@ function search(config, qObj, res,req) {
     var squery = query.split(" ");
     if(squery[i]==""){
         if(count==query.length){
+          qObj.searchword = " ";
           qObj.searchwordarr = [];
         }
         count+=1;
