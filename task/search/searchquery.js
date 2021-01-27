@@ -96,7 +96,7 @@ async function Query(qObj) {
                     var mustquery = {};
                     mustquery.operator = "OR";
                     mustquery.fields = fields;
-                    mustquery.type = "phrase";
+                    mustquery.type = "best_fields";
                     mustquery.query = searcharr[j];
                     var mustmultimatch = {};
                     mustmultimatch['multi_match'] = mustquery;
@@ -113,7 +113,7 @@ async function Query(qObj) {
                 var mustquery = {};
                 mustquery.operator = "OR";
                 mustquery.fields = fields;
-                mustquery.type = "phrase";
+                mustquery.type = "best_fields";
                 mustquery.query = qObj.searchwordarr[i];
                 var mustmultimatch = {};
                 mustmultimatch['multi_match'] = mustquery;
