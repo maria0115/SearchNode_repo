@@ -149,23 +149,10 @@ function UtcDate(utc) {
 function search(config, qObj, res,req) {
   var query = qObj.searchword;
   console.log("검색어 : " + query);
-  if (typeof query == "undefined" || typeof query == undefined || query == null || query == ""|| query == " ") {
+  if (typeof query == "undefined" || typeof query == undefined || query == null || query == "") {
     // console.log("검색어가 입력되지 않았습니다.");
     // util.writeError("검색어가 입력되지 않았습니다", res);
     qObj.searchword = " ";
-    qObj.searchwordarr = [];
-  }
-  
-  var count = 0;
-  for(var i=0; i<=query.length; i++){
-    var squery = query.split(" ");
-    if(squery[i]==""){
-        if(count==query.length){
-          qObj.searchword = " ";
-          qObj.searchwordarr = [];
-        }
-        count+=1;
-    }
   }
   
 
