@@ -121,12 +121,12 @@ async function Query(qObj) {
             }
         }
 
-        // var readers = {};
-        // readers['$readers'] = qObj.readers;
+        var readers = {};
+        readers['$readers'] = qObj.readers;
         
-        // var mustterms = {};
-        // mustterms.terms = readers;
-        // must.push(mustterms);
+        var mustterms = {};
+        mustterms.terms = readers;
+        must.push(mustterms);
 
         bool.must = must;
         query.bool = bool;
