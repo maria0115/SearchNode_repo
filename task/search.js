@@ -32,6 +32,7 @@ async function search(config, qObj, res, req) {
         })
             .then((response) => {
                 console.log(response.data,"도미노!!!!!!!");
+                qObj.readers = response.data;
             }).catch(error => {
                 throw new Error(error);
             });

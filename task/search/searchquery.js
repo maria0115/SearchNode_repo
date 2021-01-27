@@ -120,6 +120,14 @@ async function Query(qObj) {
                 must.push(mustmultimatch);
             }
         }
+
+        // var readers = {};
+        // readers['$readers'] = qObj.readers;
+        
+        // var mustterms = {};
+        // mustterms.terms = readers;
+        // must.push(mustterms);
+
         bool.must = must;
         query.bool = bool;
         esquery.query = query;

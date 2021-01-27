@@ -71,7 +71,7 @@ async function getlangueges(config, qObj, res,req) {
     }
     ret = uselanguages[lang];
     console.log(qObj,"********************");
-    console.log(ret);
+    // console.log(ret);
 
     // res.setHeader("Content-type", "application/json; charset=UTF-8");
     // ret.searchresult = ret.searchresult.replace(/@/,qObj.searchword);
