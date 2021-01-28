@@ -100,9 +100,9 @@ async function Query(qObj) {
                     mustquery.query = searcharr[j];
                     var mustmultimatch = {};
                     mustmultimatch['multi_match'] = mustquery;
-                    console.log(mustmultimatch, "mustmultimatch");
+                    // console.log(mustmultimatch, "mustmultimatch");
                     should.push(mustmultimatch);
-                    console.log(should, "should");
+                    // console.log(should, "should");
                     var shouldinmust = {};
                     shouldinmust.should = should;
                     var mustbool = {};

@@ -15,19 +15,19 @@ async function MsearchConvert(data, res,qObj) {
         }
         var d = [];
         if (resdata.hits.length > 0) {
-            console.log(resdata.hits,"----------");
+            // console.log(resdata.hits,"----------");
             for (var j = 0; j < resdata.hits.length; j++) {
                 // console.log(resd.category,"category");
 
                     var resd = resdata.hits[j]['_source'];
-                    console.log(resd,"resd");
+                    // console.log(resd,"resd");
                     if(resd.category=='person'){
                         var body = resd.body;
-                        console.log(body);
+                        // console.log(body);
                         var rebody = body.replace(/'/gi,'"');
-                        console.log(rebody,"rebody");
+                        // console.log(rebody,"rebody");
                         var jsonBody = JSON.parse(rebody);
-                        console.log(jsonBody,"jsonBody");
+                        // console.log(jsonBody,"jsonBody");
                         resd.jobTitle = jsonBody.jobTitle;
                         resd.jobPosition = jsonBody.jobPosition;
                         resd.company = jsonBody.company;
@@ -38,7 +38,7 @@ async function MsearchConvert(data, res,qObj) {
                     }
                     d.push(resd);
 
-                console.log('for문 성공적',j);
+                // console.log('for문 성공적',j);
             }
             var category = resdata.hits[0]['_source'].category;
             var total_cnt = resdata.total;
