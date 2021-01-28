@@ -3,7 +3,7 @@ async function MsearchConvert(data, res,qObj) {
     var result = {};
     // result.class = "approval";
     var response = data.responses;
-    console.log(response);
+    // console.log(response);
     var dataquery = {};
     var keywordIndex = 0;
     for (var i = 0; i < response.length; i++) {
@@ -51,13 +51,13 @@ async function MsearchConvert(data, res,qObj) {
         // result.data = dataquery;
     }
     result.data = dataquery;
-    console.log(dataquery,"dataquery");
+    // console.log(dataquery,"dataquery");
     for (var i = keywordIndex; i < response.length; i++) {
 
     }
     result.popular = response[keywordIndex].aggregations.stations.buckets;
     result.relation = response[keywordIndex+1].aggregations.stations.buckets;
-    console.log(result);
+    // console.log(result);
     res.statusCode = 200;
     res.setHeader("Content-type", "application/json; charset=UTF-8");
     res.send(JSON.stringify(result));

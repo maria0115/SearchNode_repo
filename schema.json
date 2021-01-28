@@ -95,8 +95,8 @@
 	"mappings": {
 		"data": {
 			"properties": {
-			  "$readers":{
-			    "type": "keyword",
+				"originalurl": {
+					"type": "keyword",
 					"fields": {
 						"contains": {
 							"type": "text"
@@ -107,7 +107,20 @@
 							"analyzer": "my_customer_ngram_analyzer"
 						}
 					}
-			  },
+				},
+				"$readers": {
+					"type": "keyword",
+					"fields": {
+						"contains": {
+							"type": "text"
+						},
+						"search": {
+							"type": "text",
+							"search_analyzer": "my_customer_ngram_analyzer",
+							"analyzer": "my_customer_ngram_analyzer"
+						}
+					}
+				},
 				"attachtext": {
 					"type": "keyword",
 					"fields": {

@@ -17,12 +17,12 @@ async function MsearchQuery(qObj) {
     // "size":5,"from":0,"sort":{"created":{"order":"desc"}}}
     var q = await Query(qObj);
     var stringquery = '';
-    
-    if(qObj.class ==='all'){
+
+    if (qObj.class === 'all') {
         var category = config.default_category;
-    }else{
+    } else {
         var category = [];
-        category.push(qObj.class); 
+        category.push(qObj.class);
     }
     for (var i = 0; i < category.length; i++) {
         var query = {};
@@ -88,42 +88,41 @@ async function Query(qObj) {
                 fields.push(`${field}.search`);
             }
         }
+        console.log("********************");
         for (var i = 0; i < qObj.searchwordarr.length; i++) {
-            if (qObj.searchwordarr[i].indexOf(" ") !== -1) {
-                var searcharr = qObj.searchwordarr[i].split(" ");
-                var should = [];
-                for (var j = 0; j < searcharr.length; j++) {
-                    var mustquery = {};
-                    mustquery.operator = "OR";
-                    mustquery.fields = fields;
-                    mustquery.type = "best_fields";
-                    mustquery.query = searcharr[j];
-                    var mustmultimatch = {};
-                    mustmultimatch['multi_match'] = mustquery;
-                    // console.log(mustmultimatch, "mustmultimatch");
-                    should.push(mustmultimatch);
-                    // console.log(should, "should");
-                    var shouldinmust = {};
-                    shouldinmust.should = should;
-                    var mustbool = {};
-                    mustbool.bool = shouldinmust;
-                }
-                must.push(mustbool);
-            } else {
+            var searcharr = qObj.searchwordarr[i].split(" ");
+            var should = [];
+            for (var j = 0; j < searcharr.length; j++) {
                 var mustquery = {};
                 mustquery.operator = "OR";
                 mustquery.fields = fields;
-                mustquery.type = "best_fields";
-                mustquery.query = qObj.searchwordarr[i];
+                if (searcharr.length > 1 ) {
+                    mustquery.type = "phrase";
+                    console.log('*******************왜 best_fields로오냐');
+                } else {
+                    mustquery.type = "best_fields";
+                    if(i===0){
+                        mustquery.type = "phrase";
+                    }
+                    console.log('*****************왜 phrase로오냐');
+                }
+                mustquery.query = searcharr[j];
                 var mustmultimatch = {};
                 mustmultimatch['multi_match'] = mustquery;
-                must.push(mustmultimatch);
+                // console.log(mustmultimatch, "mustmultimatch");
+                should.push(mustmultimatch);
+                // console.log(should, "should");
+                var shouldinmust = {};
+                shouldinmust.should = should;
+                var mustbool = {};
+                mustbool.bool = shouldinmust;
             }
+            must.push(mustbool);
         }
 
         var readers = {};
         readers['$readers'] = qObj.readers;
-        
+
         var mustterms = {};
         mustterms.terms = readers;
         must.push(mustterms);
