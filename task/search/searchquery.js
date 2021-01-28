@@ -137,15 +137,18 @@ async function Query(qObj) {
             esquery["_source"] = qObj.fieldname;
         }
     }
-    esquery.size = qObj.size;
-    esquery.from = qObj.pagenum;
     if (qObj.aOrd === "desc") {
-        var sortfield = {};
-        sortfield.order = qObj.aOrd;
+        var createdfield = {};
+        createdfield.order = "desc";
+        var scorefield = {};
+        scorefield.order = "desc";
         var sort = {};
-        sort[qObj.accOrrec] = sortfield;
+        sort["created"] = createdfield;
+        sort['_score'] = scorefield;
         esquery.sort = sort;
     }
+    esquery.size = qObj.size;
+    esquery.from = qObj.pagenum;
     // console.log(JSON.stringify(esquery), "esquery");
     return esquery;
 }
