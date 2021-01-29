@@ -1,4 +1,4 @@
-async function MsearchConvert(data, res,qObj) {
+async function MsearchConvert(data, res,qObj,config) {
     // console.log(JSON.stringify(data),"-----------------data");
     var result = {};
     // result.class = "approval";
@@ -41,7 +41,12 @@ async function MsearchConvert(data, res,qObj) {
                 // console.log('for문 성공적',j);
             }
             var category = resdata.hits[0]['_source'].category;
-            var total_cnt = resdata.total;
+            var total_cnt = 0;
+            if(config.version === "v6"){
+                total_cnt = resdata.total;
+            }else if(config.version === "v7"){
+                total_cnt = resdata.total.value;
+            }
             var categorydata = {};
             categorydata.total_cnt = total_cnt;
             categorydata.data = d;

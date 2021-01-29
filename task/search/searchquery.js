@@ -8,7 +8,7 @@ async function MsearchQuery(qObj) {
     console.log("MsearchQuery 여기로 왔다")
     var index = {};
     // ex){"index":"search"}
-    index.index = config.default_index;
+    index.index = config.default_index[config.version];
 
     // ex) {"query":{"bool":{"filter":[{"match":{"category":"dept"}},{"range":{"created":
     // {"gte":"now-7d/d","lt":"now","time_zone":"+09:00"}}}],"must":[{"match":{"subject.search":
@@ -40,7 +40,7 @@ async function MsearchQuery(qObj) {
     //인기검색어
     const keywordquery = await searchKeywordQuery.PopularKeyword(qObj, config);
     var keywordindex = {};
-    keywordindex.index = config.keyword_index;
+    keywordindex.index = config.keyword_index[config.version];
     stringquery += JSON.stringify(keywordindex) + "\n";
     stringquery += JSON.stringify(keywordquery) + "\n";
 
@@ -65,12 +65,12 @@ async function Query(qObj) {
         filter.push(smallm);
         // console.log(q.query.bool)
         if (qObj.gte !== "default") {
-            const utc = UtcDate(qObj.utc);
+            // const utc = UtcDate(qObj.utc);
             var createdate = {};
             createdate.format = "yyyyMMddHHmmss";
             createdate.lt = qObj.lt;
             createdate.gte = qObj.gte;
-            createdate['time_zone'] = utc;
+            // createdate['time_zone'] = utc;
             var range = {};
             range.created = createdate;
             var rangefilter = {};
@@ -98,13 +98,13 @@ async function Query(qObj) {
                 mustquery.fields = fields;
                 if (searcharr.length > 1 ) {
                     mustquery.type = "phrase";
-                    console.log('*******************왜 best_fields로오냐');
+                    // console.log('*******************왜 best_fields로오냐');
                 } else {
                     mustquery.type = "best_fields";
                     if(i===0){
                         mustquery.type = "phrase";
                     }
-                    console.log('*****************왜 phrase로오냐');
+                    // console.log('*****************왜 phrase로오냐');
                 }
                 mustquery.query = searcharr[j];
                 var mustmultimatch = {};
@@ -119,7 +119,7 @@ async function Query(qObj) {
             }
             must.push(mustbool);
         }
-        qObj.readers = ["[sysadmin]"];
+        // qObj.readers = ["[sysadmin]"];
 
         var readers = {};
         readers['$readers'] = qObj.readers;

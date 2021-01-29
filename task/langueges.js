@@ -59,6 +59,7 @@ async function getlangueges(config, qObj, res,req) {
 
     // ret = languages[];
     console.log(qObj.locale,"locale");
+    // qObj.locale = 'ko';
     var lang = '';
     if(qObj.locale===""){
         console.log(cookie.parse(qObj.cookie).language,"cookie 없음");

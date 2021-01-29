@@ -7,7 +7,7 @@ async function InsertKeyword(config, qObj, res, req) {
 
     const id = config.elastic_id + ":" + config.elastic_pw;
     var authorization = Buffer.from(id, "utf8").toString('base64');
-    var url = `${config.elastic_address}/_bulk`;
+    var url = `${config.elastic_address[config.version]}/_bulk`;
 
     if (qObj.searchword !== " ") {
         var insertquery = await query.InsertKeywordQuery(qObj, config);
@@ -37,9 +37,10 @@ async function PopularSearch(config, qObj, res, req) {
 
     const id = config.elastic_id + ":" + config.elastic_pw;
     var authorization = Buffer.from(id, "utf8").toString('base64');
-    var url = `${config.elastic_address}/${config.keyword_index}/_search`;
+    var url = `${config.elastic_address[config.version]}/${config.keyword_index[config.version]}/_search`;
 
-    console.log(stringquery);
+    console.log(JSON.stringify(stringquery));
+    console.log(url);
 
     //elasticsearch 검색
     await axios({
