@@ -82,8 +82,8 @@ app.post(pathList, (req, res) => {
             var _1Yago = moment(qObj.created).subtract(1, 'y').format("YYYYMMDDHHmmss");//1년전
             var startWeek =moment(qObj.created).startOf("week").format("YYYYMMDDHHmmss");//이번주 첫날
             var startMonth =moment(qObj.created).startOf("month").format("YYYYMMDDHHmmss");//이번달 첫날
-
-            qObj.kgte = startWeek;
+            console.log('startMonth:',startMonth);
+            qObj.klt = startWeek;
             qObj.klt = utcTime;
             if(qObj.gte == 'now-1h/s'){
               qObj.gte = _1Hago;
@@ -105,18 +105,20 @@ app.post(pathList, (req, res) => {
               qObj.gte = _1Yago;
               qObj.lt = utcTime;
             }
-            else if(qObj.dateType == 'custom'){
+            if(qObj.dateType == 'custom'){
               var startDate = qObj.gte;
               var endDate = qObj.lt;
               qObj.gte = moment(startDate,'YYYYMMDDHHmmss').utc().format("YYYYMMDDHHmmss");
               qObj.lt = moment(endDate,'YYYYMMDDHHmmss').utc().format("YYYYMMDDHHmmss");
-            }else if(qObj.gte =='thisWeek'){
+            }
+            if(qObj.term =='thisWeek'){
               qObj.kgte = startWeek;
               qObj.klt = utcTime;
-            }else if(qObj.gte =='thisMonth'){
+            }else if(qObj.term =='thisMonth'){
               qObj.kgte = startMonth;
               qObj.klt = utcTime;
             }
+
             qObj.sessionId = "DomAuthSessId="+cookie.parse(qObj.cookie).DomAuthSessId;
             console.log('qObj.sessionId:',qObj.sessionId);
             
