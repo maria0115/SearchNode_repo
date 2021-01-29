@@ -17,7 +17,8 @@
         "aweekago": "지난 1주",
         "amonthago": "지난 1개월",
         "ayearago": "지난 1년",
-        "periodsetting": "기간 설정"
+        "periodsetting": "기간 설정",
+        "locale":"ko"
     },
     "en": {
         "allsearch": "AllSearch",
@@ -37,6 +38,7 @@
         "aweekago": "A Week Ago",
         "amonthago": "A Month Ago",
         "ayearago": "A Year Ago",
-        "periodsetting": "Period Setting"
+        "periodsetting": "Period Setting",
+        "locale":"en"
     }
 }

@@ -72,15 +72,16 @@ app.post(pathList, (req, res) => {
             console.log(functionName + "hihi");
             qObj.cookie = req.headers.cookie;
 
+            console.log('qObj.created:'+qObj.created);
             var moment = require('moment');//현재시간
             var utcTime = moment.utc().format("YYYYMMDDHHmmss");//UTC시간
-            var _1Hago = moment().utc().subtract(1, 'h').format("YYYYMMDDHHmmss");//1시간전
-            var _1Dago = moment().utc().subtract(1, 'd').format("YYYYMMDDHHmmss");//1일전
-            var _1Wago = moment().utc().subtract(1, 'w').format("YYYYMMDDHHmmss");//1주전
-            var _1Mago = moment().utc().subtract(1, 'M').format("YYYYMMDDHHmmss");//1달전
-            var _1Yago = moment().utc().subtract(1, 'y').format("YYYYMMDDHHmmss");//1년전
-            var startWeek =moment().startOf("week").utc().format("YYYYMMDDHHmmss");//이번주 첫날
-            var startMonth =moment().startOf("month").utc().format("YYYYMMDDHHmmss");//이번달 첫날
+            var _1Hago = moment(qObj.created).subtract(1, 'h').format("YYYYMMDDHHmmss");//1시간전
+            var _1Dago = moment(qObj.created).subtract(1, 'd').format("YYYYMMDDHHmmss");//1일전
+            var _1Wago = moment(qObj.created).subtract(1, 'w').format("YYYYMMDDHHmmss");//1주전
+            var _1Mago = moment(qObj.created).subtract(1, 'M').format("YYYYMMDDHHmmss");//1달전
+            var _1Yago = moment(qObj.created).subtract(1, 'y').format("YYYYMMDDHHmmss");//1년전
+            var startWeek =moment(qObj.created).startOf("week").format("YYYYMMDDHHmmss");//이번주 첫날
+            var startMonth =moment(qObj.created).startOf("month").format("YYYYMMDDHHmmss");//이번달 첫날
             
             qObj.kgte = startWeek;
             qObj.klt = utcTime;
