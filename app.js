@@ -73,6 +73,14 @@ app.post(pathList, (req, res) => {
             qObj.cookie = req.headers.cookie;
 
             console.log('qObj.created:'+qObj.created);
+
+            if(config.version == "v6"){
+              var utc = UtcDate(qObj.utc);
+              var created = qObj.created+utc;
+              qObj.created = created;
+              console.log('qObj.created:',qObj.created);
+            }
+
             var moment = require('moment');//현재시간
             var utcTime = moment(qObj.created).format("YYYYMMDDHHmmss");//UTC시간
             var _1Hago = moment(qObj.created).subtract(1, 'h').format("YYYYMMDDHHmmss");//1시간전
@@ -80,8 +88,8 @@ app.post(pathList, (req, res) => {
             var _1Wago = moment(qObj.created).subtract(1, 'w').format("YYYYMMDDHHmmss");//1주전
             var _1Mago = moment(qObj.created).subtract(1, 'M').format("YYYYMMDDHHmmss");//1달전
             var _1Yago = moment(qObj.created).subtract(1, 'y').format("YYYYMMDDHHmmss");//1년전
-            var startWeek =moment(qObj.created).startOf("week").format("YYYYMMDDHHmmss");//이번주 첫날
-            var startMonth =moment(qObj.created).startOf("month").format("YYYYMMDDHHmmss");//이번달 첫날
+            var startWeek =moment(qObj.created).startOf("week").utc().format("YYYYMMDDHHmmss");//이번주 첫날
+            var startMonth =moment(qObj.created).startOf("month").utc().format("YYYYMMDDHHmmss");//이번달 첫날
             console.log('startMonth:',startMonth);
             qObj.klt = startWeek;
             qObj.klt = utcTime;
@@ -147,6 +155,7 @@ function UtcDate(utc) {
       date = utctime.toFormat('+HH:MI');
   }
   console.log('date:',date);
+  return date;
 }
 
 function search(config, qObj, res,req) {

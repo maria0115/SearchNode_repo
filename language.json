@@ -24,7 +24,8 @@
         "associatedsearchterm":"연관검색어",
         "popularsearchterm":"인기검색어",
         "thisweek":"이번주",
-        "thismonth":"이번달"
+        "thismonth":"이번달",
+        "accuracyorder":"정확도순"
     },
     "en": {
         "allsearch": "AllSearch",
@@ -51,6 +52,8 @@
         "associatedsearchterm":"Associated search term",
         "popularsearchterm":"Popular search term",
         "thisweek":"This week",
-        "thismonth":"This month"
+        "thismonth":"This month",
+        "accuracyorder":"Accuracy order"
+        
     }
 }
