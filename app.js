@@ -74,12 +74,12 @@ app.post(pathList, (req, res) => {
 
             console.log('qObj.created:'+qObj.created);
 
-            if(config.version == "v6"){
-              var utc = UtcDate(qObj.utc);
-              var created = qObj.created+utc;
-              qObj.created = created;
-              console.log('qObj.created:',qObj.created);
-            }
+            // if(config.version == "v6"){
+            //   var utc = UtcDate(qObj.utc);
+            //   var created = qObj.created+utc;
+            //   qObj.created = created;
+            //   console.log('qObj.created:',qObj.created);
+            // }
 
             var moment = require('moment');//현재시간
             var utcTime = moment(qObj.created).format("YYYYMMDDHHmmss");//UTC시간
