@@ -1,5 +1,5 @@
 {"port":4000,
-"version":"v7",
+"version":"v6",
 "default_category":["dept","person","board","approval"],
 "default_field":["subject","body","author","dept","attached","attachtext"],
 "default_index":{"v6":"sis.emate.search.v0.2","v7":"sis.emate.search.v0.2"},

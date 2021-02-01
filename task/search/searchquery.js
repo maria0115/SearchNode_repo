@@ -121,7 +121,7 @@ async function Query(qObj) {
                 must.push(mustbool);
             }
         }
-        qObj.readers = ["[sysadmin]"];
+        // qObj.readers = ["[sysadmin]"];
 
         var readers = {};
         readers['$readers'] = qObj.readers;
