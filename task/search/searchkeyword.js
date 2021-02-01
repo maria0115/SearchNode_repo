@@ -12,6 +12,7 @@ async function InsertKeyword(config, qObj, res, req) {
     if (qObj.searchword !== " ") {
         var insertquery = await query.InsertKeywordQuery(qObj, config);
         console.log(insertquery, "insertquery");
+        console.log("url",url);
         //elasticsearch 검색
         await axios({
             method: 'put',
