@@ -18,7 +18,13 @@
         "amonthago": "지난 1개월",
         "ayearago": "지난 1년",
         "periodsetting": "기간 설정",
-        "locale":"ko"
+        "locale":"ko",
+        "inputsearch":"검색어를 입력하세요",
+        "searchofresult":"결과 내 재검색",
+        "associatedsearchterm":"연관검색어",
+        "popularsearchterm":"인기검색어",
+        "thisweek":"이번주",
+        "thismonth":"이번달"
     },
     "en": {
         "allsearch": "AllSearch",
@@ -39,6 +45,12 @@
         "amonthago": "A Month Ago",
         "ayearago": "A Year Ago",
         "periodsetting": "Period Setting",
-        "locale":"en"
+        "locale":"en",
+        "inputsearch":"Please enter a search term",
+        "searchofresult":"Rescan within results",
+        "associatedsearchterm":"Associated search term",
+        "popularsearchterm":"Popular search term",
+        "thisweek":"This week",
+        "thismonth":"This month"
     }
 }
