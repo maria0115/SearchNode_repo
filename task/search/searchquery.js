@@ -90,36 +90,38 @@ async function Query(qObj) {
         }
         console.log("********************");
         for (var i = 0; i < qObj.searchwordarr.length; i++) {
-            var searcharr = qObj.searchwordarr[i].split(" ");
-            var should = [];
-            for (var j = 0; j < searcharr.length; j++) {
-                var mustquery = {};
-                mustquery.operator = "OR";
-                mustquery.fields = fields;
-                if (searcharr.length > 1 ) {
-                    mustquery.type = "phrase";
-                    // console.log('*******************왜 best_fields로오냐');
-                } else {
-                    mustquery.type = "best_fields";
-                    if(i===0){
+            if(qObj.searchwordarr[i]!==""||qObj.searchwordarr[i]!==" "){
+                var searcharr = qObj.searchwordarr[i].split(" ");
+                var should = [];
+                for (var j = 0; j < searcharr.length; j++) {
+                    var mustquery = {};
+                    mustquery.operator = "OR";
+                    mustquery.fields = fields;
+                    if (searcharr.length > 1 ) {
                         mustquery.type = "phrase";
+                        // console.log('*******************왜 best_fields로오냐');
+                    } else {
+                        mustquery.type = "best_fields";
+                        if(i===0){
+                            mustquery.type = "phrase";
+                        }
+                        // console.log('*****************왜 phrase로오냐');
                     }
-                    // console.log('*****************왜 phrase로오냐');
+                    mustquery.query = searcharr[j];
+                    var mustmultimatch = {};
+                    mustmultimatch['multi_match'] = mustquery;
+                    // console.log(mustmultimatch, "mustmultimatch");
+                    should.push(mustmultimatch);
+                    // console.log(should, "should");
+                    var shouldinmust = {};
+                    shouldinmust.should = should;
+                    var mustbool = {};
+                    mustbool.bool = shouldinmust;
                 }
-                mustquery.query = searcharr[j];
-                var mustmultimatch = {};
-                mustmultimatch['multi_match'] = mustquery;
-                // console.log(mustmultimatch, "mustmultimatch");
-                should.push(mustmultimatch);
-                // console.log(should, "should");
-                var shouldinmust = {};
-                shouldinmust.should = should;
-                var mustbool = {};
-                mustbool.bool = shouldinmust;
+                must.push(mustbool);
             }
-            must.push(mustbool);
         }
-        // qObj.readers = ["[sysadmin]"];
+        qObj.readers = ["[sysadmin]"];
 
         var readers = {};
         readers['$readers'] = qObj.readers;
