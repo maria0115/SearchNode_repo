@@ -25,7 +25,8 @@
         "popularsearchterm":"인기검색어",
         "thisweek":"이번주",
         "thismonth":"이번달",
-        "accuracyorder":"정확도순"
+        "accuracyorder":"정확도순",
+        "apply":"적용"
     },
     "en": {
         "allsearch": "AllSearch",
@@ -53,7 +54,8 @@
         "popularsearchterm":"Popular search term",
         "thisweek":"This week",
         "thismonth":"This month",
-        "accuracyorder":"Accuracy order"
+        "accuracyorder":"Accuracy order",
+        "apply":"Apply"
         
     }
 }
