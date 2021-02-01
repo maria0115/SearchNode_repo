@@ -7,7 +7,6 @@ const util = require("./lib/util.js");
 const dosearch = require("./task/search.js");
 const languege = require("./task/langueges.js");
 const keyword = require("./task/search/searchkeyword.js");
-const cookie = require('cookie');
 const log = console.log;
 
 var pathList = [
@@ -70,16 +69,8 @@ app.post(pathList, (req, res) => {
             functionName = str.substr(nIndex + 1, str.length);
             // eval(functionName)
             console.log(functionName + "hihi");
-            qObj.cookie = req.headers.cookie;
 
             console.log('qObj.created:'+qObj.created);
-
-            // if(config.version == "v6"){
-            //   var utc = UtcDate(qObj.utc);
-            //   var created = qObj.created+utc;
-            //   qObj.created = created;
-            //   console.log('qObj.created:',qObj.created);
-            // }
 
             var moment = require('moment');//현재시간
             var utcTime = moment(qObj.created).format("YYYYMMDDHHmmss");//UTC시간
@@ -88,8 +79,8 @@ app.post(pathList, (req, res) => {
             var _1Wago = moment(qObj.created).subtract(1, 'w').format("YYYYMMDDHHmmss");//1주전
             var _1Mago = moment(qObj.created).subtract(1, 'M').format("YYYYMMDDHHmmss");//1달전
             var _1Yago = moment(qObj.created).subtract(1, 'y').format("YYYYMMDDHHmmss");//1년전
-            var startWeek =moment(qObj.created).startOf("week").utc().format("YYYYMMDDHHmmss");//이번주 첫날
-            var startMonth =moment(qObj.created).startOf("month").utc().format("YYYYMMDDHHmmss");//이번달 첫날
+            var startWeek =moment(qObj.current).startOf("week").utc().format("YYYYMMDDHHmmss");//이번주 첫날
+            var startMonth =moment(qObj.current).startOf("month").utc().format("YYYYMMDDHHmmss");//이번달 첫날
             console.log('startMonth:',startMonth);
             qObj.klt = startWeek;
             qObj.klt = utcTime;
@@ -126,9 +117,6 @@ app.post(pathList, (req, res) => {
               qObj.kgte = startMonth;
               qObj.klt = utcTime;
             }
-
-            qObj.sessionId = "DomAuthSessId="+cookie.parse(qObj.cookie).DomAuthSessId;
-            console.log('qObj.sessionId:',qObj.sessionId);
             
             console.log(functionName,"functionname");
             eval(functionName + '(config, qObj, res,req)');
