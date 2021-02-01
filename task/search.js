@@ -23,29 +23,26 @@ async function search(config, qObj, res, req) {
 
     // qObj = {
     //     from: 1,
-    //     size: 10,
+    //     size: 3,
     //     fieldname: 'all',
-    //     searchword: '1000만 1',
-    //     searchwordarr: [ '1000만 1' ],
+    //     searchword: ' ',
+    //     searchwordarr: [],
     //     accOrrec: 'created',
-    //     aOrd: 'accuracy',
+    //     aOrd: 'desc',
     //     class: 'all',
     //     pagenum: 0,
     //     check: false,
-    //     dateType: 'all',
-    //     gte: 'default',
-    //     lt: '',
+    //     dateType: 'custom',
+    //     gte: '20201109150000',
+    //     lt: '20210121150000',
     //     utc: -540,
-    //     created: '20210128T113111',
+    //     created: '20210129T034023',
     //     term: 'thisWeek',
-    //     cookie: 'language=en; DomAuthSessId=EB6BE3538E78A47C35ECDA4387F6723F',
-    //     kgte: '20210123150000',
-    //     klt: '20210128023111',
-    //     sessionId: 'DomAuthSessId=EB6BE3538E78A47C35ECDA4387F6723F',
-    //     readers: [
-    //         "[sysadmin]"
-    //     ],
-    //     locale: 'ko'
+    //     cookie: 'IWASessId=5E1FB22574AD0606FD45390E6F450686; language=en; DomAuthSessId=38906A772BC68DBBC646AEE195F7E5E9',
+    //     kgte: '20210124000000',
+    //     klt: '20210129034024',
+    //     sessionId: 'DomAuthSessId=38906A772BC68DBBC646AEE195F7E5E9',
+    //     readers: ["[sysadmin]"]
     //   };
     var url = `${config.getReaders}`;
 
