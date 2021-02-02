@@ -22,27 +22,27 @@ async function search(config, qObj, res, req) {
     // qObj.created = "20210125T170331+09:00";
 
     // qObj = {
-    //     from: 1,
-    //     size: 3,
-    //     fieldname: 'all',
-    //     searchword: ' ',
-    //     searchwordarr: [],
-    //     accOrrec: 'created',
-    //     aOrd: 'desc',
-    //     class: 'all',
-    //     pagenum: 0,
-    //     check: false,
-    //     dateType: 'custom',
-    //     gte: '20201109150000',
-    //     lt: '20210121150000',
-    //     utc: -540,
-    //     created: '20210129T034023',
-    //     term: 'thisWeek',
-    //     cookie: 'IWASessId=5E1FB22574AD0606FD45390E6F450686; language=en; DomAuthSessId=38906A772BC68DBBC646AEE195F7E5E9',
-    //     kgte: '20210124000000',
-    //     klt: '20210129034024',
-    //     sessionId: 'DomAuthSessId=38906A772BC68DBBC646AEE195F7E5E9',
-    //     readers: ["[sysadmin]"]
+        // from: 1,
+        // size: 3,
+        // fieldname: 'all',
+        // searchword: ' ',
+        // searchwordarr: [],
+        // accOrrec: 'created',
+        // aOrd: 'desc',
+        // class: 'all',
+        // pagenum: 0,
+        // check: false,
+        // dateType: 'custom',
+        // gte: '20201109150000',
+        // lt: '20210121150000',
+        // utc: -540,
+        // created: '20210129T034023',
+        // term: 'thisWeek',
+        // cookie: 'IWASessId=5E1FB22574AD0606FD45390E6F450686; language=en; DomAuthSessId=38906A772BC68DBBC646AEE195F7E5E9',
+        // kgte: '20210124000000',
+        // klt: '20210129034024',
+        // sessionId: 'DomAuthSessId=38906A772BC68DBBC646AEE195F7E5E9',
+        // readers: ["[sysadmin]"]
     //   };
     var url = `${config.getReaders}`;
 
@@ -50,7 +50,7 @@ async function search(config, qObj, res, req) {
             method: 'get',
             url: url,
             headers: {
-                "Cookie": qObj.sessionId,
+                "Cookie": qObj.cookie,
                 'Content-Type': 'application/json'
             }
         })

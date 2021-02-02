@@ -25,7 +25,7 @@ function convert(config, qObj, res, es_res) {
     return ret;
 }
 
-async function getlangueges(config, qObj, res,req) {
+async function getlanguages(config, qObj, res,req) {
     // var url = `${config.languages}?category=${qObj.locale}`;
     // console.log(url);
     var ret = {};
@@ -88,5 +88,5 @@ async function getlangueges(config, qObj, res,req) {
 };
 
 module.exports = {
-    getlangueges,
+    getlanguages,
 }

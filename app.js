@@ -11,7 +11,7 @@ const log = console.log;
 
 var pathList = [
   "/search",
-  "/getlangueges",
+  "/getlanguages",
   "/schema",
   "/popular",
   // "/all",
@@ -50,6 +50,7 @@ app.post(pathList, (req, res) => {
 
       console.log("찾았다");
       console.log(qObj);
+      qObj.cookie = req.headers.cookie;
 
       var reqUrl = url.parse(req.url, true);    
       console.log(reqUrl);
@@ -165,7 +166,7 @@ function search(config, qObj, res,req) {
 
 }
 
-function getlangueges(config, qObj, res,req) {
+function getlanguages(config, qObj, res,req) {
   console.log("getlangueges------");
   var locale =qObj.locale;
   if (typeof locale == "undefined" || typeof locale == undefined || locale == null) {
@@ -174,7 +175,7 @@ function getlangueges(config, qObj, res,req) {
     return;
   }
 
-  languege.getlangueges(config, qObj, res,req);
+  languege.getlanguages(config, qObj, res,req);
 
 }
 

@@ -1,13 +1,36 @@
-{"port":4000,
-"version":"v6",
-"default_category":["dept","person","board","approval"],
-"default_field":["subject","body","author","dept","attached","attachtext"],
-"default_index":{"v6":"sis.emate.search.v0.2","v7":"sis.emate.search.v0.2"},
-"keyword_index":{"v6":"searchkeyword","v7":"searchkeyword"},
-"elastic_address": {"v6":"http://125.7.235.202:19200","v7":"http://125.7.235.12:19200"},
-
-"elastic_id":"elastic",
-"elastic_pw":"123!@#qwe",
-"languages":"http://localhost/homepage.nsf/api/data/collections/name/language",
-"getReaders":"http://localhost/homepage.nsf/test1?OpenPage"
+{
+    "port": 4000,
+    "version": "v7",
+    "default_category": [
+        "dept",
+        "person",
+        "board",
+        "approval",
+        "mail"
+    ],
+    "default_field": [
+        "subject",
+        "body",
+        "author",
+        "dept",
+        "attached",
+        "attachtext"
+    ],
+    "default_index": {
+        "v6": "sis.emate.search.v0.2",
+        "v7": "sis.emate.search.v0.2"
+    },
+    "keyword_index": {
+        "v6": "searchkeyword",
+        "v7": "searchkeyword"
+    },
+    "elastic_address": {
+        "v6": "http://125.7.235.202:19200",
+        "v7": "http://125.7.235.12:19200"
+    },
+    "elastic_id": "elastic",
+    "elastic_pw": "123!@#qwe",
+    "languages": "http://localhost/homepage.nsf/api/data/collections/name/language",
+    "getReaders": "http://mail.saerom.co.kr/portal.nsf/getUserNameList?openpage",
+    "getReaders_description":"현재 사용자의 권한(@UserNamesList)을 추출하는 주소"
 }
