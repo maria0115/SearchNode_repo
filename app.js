@@ -50,8 +50,8 @@ app.post(pathList, (req, res) => {
       console.log(util.getTimeStamp() + " " + "POST..." + req.url);
 
       console.log("찾았다");
-      console.log(qObj);
       qObj.cookie = req.headers.cookie;
+      console.log(req.headers.cookie);
 
       var reqUrl = url.parse(req.url, true);    
       console.log(reqUrl);
@@ -170,11 +170,6 @@ function search(config, qObj, res,req) {
 function getlanguages(config, qObj, res,req) {
   console.log("getlangueges------");
   var locale =qObj.locale;
-  if (typeof locale == "undefined" || typeof locale == undefined || locale == null) {
-    console.log("locale가 입력하지 않았습니다.");
-    util.writeError("locale가 입력하지 않았습니다.", res);
-    return;
-  }
 
   languege.getlanguages(config, qObj, res,req);
 

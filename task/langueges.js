@@ -61,16 +61,17 @@ async function getlanguages(config, qObj, res,req) {
     console.log(qObj.locale,"locale");
     // qObj.locale = 'ko';
     var lang = '';
-    if(qObj.locale===""){
+    const parsocookie = cookie.parse(qObj.cookie);
+    if(parsocookie.hasOwnProperty("language")){
         // console.log(cookie.parse(qObj.cookie).language,"cookie 없음");
-        // lang = cookie.parse(qObj.cookie).language;
-        lang = "ko";
+        lang = cookie.parse(qObj.cookie).language;
         // console.log(ret);
     }else{
-        lang = qObj.locale;
+        lang = config.default_language;
         // console.log(ret);
     }
     ret = uselanguages[lang];
+    console.log(lang);
     console.log(qObj,"********************");
     // console.log(ret);
 
