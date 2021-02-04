@@ -9,13 +9,19 @@
   "dependencies": {
     "axios": "^0.21.1",
     "cookie": "^0.4.1",
+    "date-utils": "^1.2.21",
     "express": "^4.17.1",
     "form-data": "^3.0.0",
+    "moment": "^2.29.1",
     "url-search-params-polyfill": "^8.1.0",
     "vue-cookies": "^1.7.4"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
   "scripts": {
+    "start" : "node app.js",
+    "backend":"nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

@@ -1,4 +1,4 @@
-var config = require("../config.json");
+
 const util = require("../lib/util.js");
 const logger = require("../lib/log.js");
 const axios = require("axios");

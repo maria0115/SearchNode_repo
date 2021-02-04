@@ -1,4 +1,4 @@
-const config = require("../../config.json");
+const config = require("../../config/key.js");
 const searchKeywordQuery = require('./searchkeyword/query.js');
 // use new Date
 require('date-utils');
@@ -121,7 +121,7 @@ async function Query(qObj) {
                 must.push(mustbool);
             }
         }
-        // qObj.readers = ["[sysadmin]"];
+        // qObj.readers = ["CN=SAEROM/O=SIService"];
 
         var readers = {};
         readers['$readers'] = qObj.readers;

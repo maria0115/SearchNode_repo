@@ -1,4 +1,4 @@
-const config = require("../config.json");
+
 const axios = require("axios");
 const searchquery = require("./search/searchquery.js");
 const searchconvert = require("./search/searchconvert.js");

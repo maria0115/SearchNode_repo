@@ -22,7 +22,7 @@ async function test(config, qObj, res, req) {
     //elasticsearch
     const id = config.elastic_id + ":" + config.elastic_pw;
     var authorization = Buffer.from(id, "utf8").toString('base64');
-    var url = `${config.elastic_address}/${config.default_index}/`;
+    var url = `${config.elastic_address[config.version]}/${config.default_index}/`;
     //msearch
     var stringquery = "";
     var functionName = "";

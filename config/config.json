@@ -31,7 +31,7 @@
     "elastic_id": "elastic",
     "elastic_pw": "123!@#qwe",
     "languages": "http://localhost/homepage.nsf/api/data/collections/name/language",
-    "getReaders": "http://mail.saerom.co.kr/portal.nsf/getUserNameList?openpage",
+    "getReaders":"http://mail.saerom.co.kr/portal.nsf/getUserNameList?openpage",
     "getReaders_description":"현재 사용자의 권한(@UserNamesList)을 추출하는 주소",
     "default_language":"ko"
 }
