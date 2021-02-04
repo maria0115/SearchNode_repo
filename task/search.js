@@ -44,6 +44,7 @@ async function search(config, qObj, res, req) {
         // sessionId: 'DomAuthSessId=38906A772BC68DBBC646AEE195F7E5E9',
         // readers: ["[sysadmin]"]
     //   };
+    
     var url = `${config.getReaders}`;
 
     await axios({
