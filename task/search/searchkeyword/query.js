@@ -1,6 +1,6 @@
 
 async function PopularKeyword(qObj, config) {
-    console.log("Popular",qObj);
+    // console.log("Popular",qObj);
     var query = {};
     query.size = 0;
     var aggs = {};

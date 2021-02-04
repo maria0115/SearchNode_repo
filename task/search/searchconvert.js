@@ -47,7 +47,7 @@ async function MsearchConvert(data, res,qObj,config) {
     }
     result.popular = response[keywordIndex].aggregations.stations.buckets;
     result.relation = response[keywordIndex+1].aggregations.stations.buckets;
-    // console.log(result);
+    console.log(JSON.stringify(result));
     res.statusCode = 200;
     res.setHeader("Content-type", "application/json; charset=UTF-8");
     res.send(JSON.stringify(result));

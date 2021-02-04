@@ -18,7 +18,7 @@ async function MsearchQuery(qObj) {
     var q = await Query(qObj);
     var stringquery = '';
 
-    if (qObj.class === 'all') {
+    if (qObj.class === 'allsearch') {
         var category = config.default_category;
     } else {
         var category = [];
