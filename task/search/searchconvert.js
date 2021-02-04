@@ -20,22 +20,7 @@ async function MsearchConvert(data, res,qObj,config) {
                 // console.log(resd.category,"category");
 
                     var resd = resdata.hits[j]['_source'];
-                    // console.log(resd,"resd");
-                    if(resd.category=='person'){
-                        var body = resd.body;
-                        // console.log(body);
-                        var rebody = body.replace(/'/gi,'"');
-                        // console.log(rebody,"rebody");
-                        var jsonBody = JSON.parse(rebody);
-                        // console.log(jsonBody,"jsonBody");
-                        resd.jobTitle = jsonBody.jobTitle;
-                        resd.jobPosition = jsonBody.jobPosition;
-                        resd.company = jsonBody.company;
-                        resd.phone = jsonBody.phone;
-                        resd.tel = jsonBody.tel;
-                        resd.email = jsonBody.email;
-                        resd.job = jsonBody.job;
-                    }
+                    
                     d.push(resd);
 
                 // console.log('for문 성공적',j);
